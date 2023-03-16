@@ -9,18 +9,19 @@ export default function Leaderboard() {
     const [players, setPlayers] = useState([]);
     const [arePlayersSet, setArePlayersSet] = useState(false);
 
-    //for testing
-    const url = `http://${process.env.REACT_APP_API_URL}:${process.env.REACT_APP_API_PORT}/leaderboard`;
+    let url;
 
-    //for build
-    //const url = `https://${process.env.REACT_APP_API_URL}/leaderboard`;
+    if(process.env.REACT_APP_STATE === "TEST") {
+        url = `http://${process.env.REACT_APP_API_URL}:${process.env.REACT_APP_API_PORT}/leaderboard`;
+    } else {
+        url = `https://${process.env.REACT_APP_API_URL}/leaderboard`;
+    }
 
     useEffect(() => {
         if(!arePlayersSet) {
             axios.get(url).then(res => {
                 setPlayers(res.data);
                 setArePlayersSet(true);
-                console.log(res.data);
             });
         }
     });
@@ -28,6 +29,7 @@ export default function Leaderboard() {
     return (
         <>
             <CustomNavbar/>
+            <h1>Global Ranking</h1>
             <div className={styles.container}>
                 <div className={styles.wrapper}>
                     <TableLeaderboard data={players} rowsPerPage={10} />

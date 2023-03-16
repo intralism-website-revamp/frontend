@@ -8,13 +8,11 @@ export default function CustomNavbar() {
     return(<div>
         <Container fluid className="p-3">
             <Navbar bg="light" expand="lg">
-                <Navbar.Brand as={Link} to={`${process.env.PUBLIC_URL}/home`}></Navbar.Brand>
+                <Navbar.Brand as={Link} to={`${process.env.PUBLIC_URL}/home`}>Intralism Revamp</Navbar.Brand>
                 <Navbar.Toggle aria-controls="basic-navbar-nav" />
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
-                        <Nav.Link as={Link} to={`${process.env.PUBLIC_URL}/maps`}>Maps</Nav.Link>
-                        <Nav.Link as={Link} to={`${process.env.PUBLIC_URL}/team`}>Team</Nav.Link>
-                        <Nav.Link as={Link} to={`${process.env.PUBLIC_URL}/search`}>Search</Nav.Link>
+                        <Nav.Link as={Link} to={`${process.env.PUBLIC_URL}/leaderboard`}>Leaderboard</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>
