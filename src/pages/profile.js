@@ -6,18 +6,25 @@ import axios from 'axios';
 import {Col, Row} from "react-bootstrap";
 import Container from "react-bootstrap/Container";
 import {Tooltip} from "@mui/material";
+import styles from "./profile.module.css";
 
 export default function Profile() {
     const {id} = useParams();
     const [player, setPlayer] = useState([]);
     const [isPlayerSet, setIsPlayerSet] = useState(false);
 
+    const [tags, setTags] = useState([]);
+    const [isTagsSet, setIsTagsSet] = useState(false);
+
     let url;
+    let url2;
 
     if(process.env.REACT_APP_STATE === "TEST") {
         url = `http://${process.env.REACT_APP_API_URL}:${process.env.REACT_APP_API_PORT}/player/${id}`;
+        url2 = `http://${process.env.REACT_APP_API_URL}:${process.env.REACT_APP_API_PORT}/tags/${id}`;
     } else {
         url = `https://${process.env.REACT_APP_API_URL}/player/${id}`;
+        url2 = `https://${process.env.REACT_APP_API_URL}/tags/${id}`;
     }
 
     useEffect(() => {
@@ -25,6 +32,12 @@ export default function Profile() {
             axios.get(url).then(res => {
                 setPlayer(res.data);
                 setIsPlayerSet(true);
+            });
+        }
+        if(!isTagsSet) {
+            axios.get(url2).then(res => {
+                setTags(res.data);
+                setIsTagsSet(true);
             });
         }
     });
@@ -41,19 +54,30 @@ export default function Profile() {
                 <Container>
                     <Row>
                         <Col xs={3}>
-                            <img src={player.picture} style={{borderRadius: '50%', transform: textRotation}} alt={"player"}/>
+                            <img src={player.picture} style={{borderRadius: '50%', transform: textRotation}} alt={"player"}/><br/>
+                            <a href={"https://intralism.khb-soft.ru/?player=" + id}><img src={process.env.PUBLIC_URL + "/official_intralism.png"} alt={"steam"} style={{height: '25px', width: '25px'}}/></a>
+                            <a style={{paddingLeft: '15px'}} href={"https://steamcommunity.com/id/" + id}><img src={process.env.PUBLIC_URL + "/steam.png"} alt={"steam"} style={{height: '25px', width: '25px'}}/></a>
                         </Col>
-                        <Col xs={2}>
+                        <Col xs={8}>
                             <h1 style={{transform: textRotation}}>{player.name}</h1>
+                            {tags && tags.length && tags.length >= 1 &&
+                                <span className={styles.firstBadge}>{tags[0].name}</span>
+                            }
+                            {tags && tags.map && tags.length > 1 && tags.slice((tags.length * -1) + 1).map(x =>
+                                <span className={styles.badge}>{x.name}</span>
+                            )}
+
                             <p style={{transform: textRotation, fontSize: '30px'}}>#{player.globalRank}</p>
                             <p style={{transform: textRotation}}>
                                 <Tooltip title={player.country}>
                                     <a href={process.env.PUBLIC_URL + '/leaderboard/' + player.countryShort}><img style={{height: '34px', width: '20px'}} src={process.env.PUBLIC_URL + '/flags/' + player.countryShort + '.svg'} alt={"country flag"}/></a>
                                 </Tooltip> #{player.countryRank}
                             </p>
-                            <p style={{transform: textRotation}}>{player.weightedpp}</p>
+                            <Tooltip title={player.points}>
+                                <p style={{transform: textRotation}}>{player.weightedpp}pp</p>
+                            </Tooltip>
                         </Col>
-                        <Col xs={6}></Col>
+
                     </Row>
                 </Container>
                 <br/>

@@ -15,7 +15,7 @@ function Index() {
                     <Route exact path={`${process.env.PUBLIC_URL}/`} element={<Home/>}></Route>
                     <Route exact path={`${process.env.PUBLIC_URL}/home`} element={<Home/>}></Route>
                     <Route exact path={`${process.env.PUBLIC_URL}/profile/:id`} element={<Profile/>}></Route>
-                    <Route exact path={`${process.env.PUBLIC_URL}/leaderboard`} element={<Leaderboard/>}></Route>
+                    <Route exact path={`${process.env.PUBLIC_URL}/leaderboard/global`} element={<Leaderboard/>}></Route>
                     <Route exact path={`${process.env.PUBLIC_URL}/leaderboard/:country`} element={<LeaderboardCountry/>}></Route>
                     <Route path={`${process.env.PUBLIC_URL}/*`} element={<NotFound></NotFound>} ></Route>
                 </Routes>
