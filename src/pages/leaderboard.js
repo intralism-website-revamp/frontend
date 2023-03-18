@@ -1,6 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, {useEffect, useState} from "react";
-import styles from "./leaderboard.module.css";
 import TableLeaderboard from "../components/tableLeaderboard.jsx";
 import CustomNavbar from "../components/navbar";
 import axios from "axios";
@@ -30,11 +29,8 @@ export default function Leaderboard() {
         <>
             <CustomNavbar/>
             <h1>Global Ranking</h1>
-            <div className={styles.container}>
-                <div className={styles.wrapper}>
-                    <TableLeaderboard data={players} rowsPerPage={10} />
-                </div>
-            </div>
+            <br/>
+            <TableLeaderboard data={players} rowsPerPage={10} />
         </>
 
     );

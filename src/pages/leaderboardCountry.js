@@ -1,6 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, {useEffect, useState} from "react";
-import styles from "./leaderboard.module.css";
 import CustomNavbar from "../components/navbar";
 import axios from "axios";
 import {useParams} from "react-router-dom";
@@ -41,11 +40,8 @@ export default function LeaderboardCountry() {
         <>
             <CustomNavbar/>
             <h1>Country Ranking: <img style={{height: '42px', width: '26px'}} src={process.env.PUBLIC_URL + '/flags/' + country.toLowerCase() + '.svg'} alt={"flag of " + countryName}/> {countryName}</h1>
-            <div className={styles.container}>
-                <div className={styles.wrapper}>
-                    <TableLeaderboardCountry data={players} rowsPerPage={10} />
-                </div>
-            </div>
+            <br/>
+            <TableLeaderboardCountry data={players} rowsPerPage={10} />
         </>
 
     );

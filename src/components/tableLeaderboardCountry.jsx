@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 import useTable from "../hooks/useTable.js";
-import styles from "./tableLeaderboard.module.css";
+import styles from "./tableLeaderboardCountry.module.css";
 import TableFooter from "./tableFooter.jsx";
 import {Tooltip} from "@mui/material";
 
