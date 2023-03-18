@@ -35,9 +35,10 @@ export default function Profile() {
     useEffect(() => {
         if(!isInitPlayerSet) {
             axios.get(url3).then(res => {
-                setPlayer(res.data);
                 setIsInitPlayerSet(true);
-                console.log(res.data);
+                if(res.data !== null) {
+                    setPlayer(res.data);
+                }
             });
         } else {
             if(!isPlayerSet) {
