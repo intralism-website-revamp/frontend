@@ -30,7 +30,7 @@ const TableLeaderboard = ({ data, rowsPerPage }) => {
                         <td className={styles.tableCell}>{el.rank}</td>
                         <td className={styles.tableCell}><img src={el.image} style={{width: '70px', height: '70px'}} alt={"picture of " + el.name}/> <a href={process.env.PUBLIC_URL + "/profile/" + el.id} style={{textDecoration: 'none'}}>{el.name}</a></td>
                         <td className={styles.tableCell}>
-                            <Tooltip title={regionNames.of(el.country.toUpperCase() === "NONE" ? "" : el.country.toUpperCase()) === "" ? "Unknown Country" : regionNames.of(el.country.toUpperCase() === "NONE" ? "" : el.country.toUpperCase()) }>
+                            <Tooltip title={el.country.toUpperCase() === "NONE" ? "Unknown Country" : regionNames.of(el.country.toUpperCase())}>
                                 <a href={process.env.PUBLIC_URL + '/leaderboard/' + el.country}><img style={{height: '42px', width: '26px'}} src={process.env.PUBLIC_URL + '/flags/' + el.country + '.svg'} alt={"image of " + el.country}/></a>
                             </Tooltip> #{el.country_rank}
                         </td>
