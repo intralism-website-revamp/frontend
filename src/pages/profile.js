@@ -72,7 +72,7 @@ export default function Profile() {
                     </Col>
                     <Col xs={8}>
                         <h1 style={{transform: textRotation}}>{player.name}</h1>
-                        {tags && tags.length && tags.length >= 1 &&
+                        {tags && tags.length >= 1 &&
                             <span className={styles.firstBadge}>{tags[0].name}</span>
                         }
                         {tags && tags.map && tags.length > 1 && tags.slice((tags.length * -1) + 1).map(x =>
@@ -91,8 +91,8 @@ export default function Profile() {
                         <Tooltip title={player.points}>
                             <p style={{transform: textRotation}}>{player.weightedpp}pp</p>
                         </Tooltip>
-                        <a href={"https://intralism.khb-soft.ru/?player=" + id} target='_blank'><img src={process.env.PUBLIC_URL + "/official_intralism.png"} alt={"steam"} style={{height: '25px', width: '25px'}}/></a>
-                        <a style={{paddingLeft: '15px'}} href={"https://steamcommunity.com/profiles/" + id} target='_blank'><img src={process.env.PUBLIC_URL + "/steam.png"} alt={"steam"} style={{height: '25px', width: '25px'}}/></a>
+                        <a href={"https://intralism.khb-soft.ru/?player=" + id} target='_blank' rel='noreferrer'><img src={process.env.PUBLIC_URL + "/official_intralism.png"} alt={"steam"} style={{height: '25px', width: '25px'}}/></a>
+                        <a style={{paddingLeft: '15px'}} href={"https://steamcommunity.com/profiles/" + id} target='_blank' rel='noreferrer'><img src={process.env.PUBLIC_URL + "/steam.png"} alt={"steam"} style={{height: '25px', width: '25px'}}/></a>
                     </Col>
                 </Row>
             </Container>

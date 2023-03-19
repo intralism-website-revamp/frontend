@@ -7,6 +7,8 @@ import NotFound from "./pages/notfound";
 import Profile from "./pages/profile";
 import Leaderboard from "./pages/leaderboard";
 import LeaderboardCountry from "./pages/leaderboardCountry";
+import Maps from "./pages/maps";
+import Map from "./pages/map";
 
 function Index() {
     return (
@@ -17,6 +19,8 @@ function Index() {
                     <Route exact path={`${process.env.PUBLIC_URL}/profile/:id`} element={<Profile/>}></Route>
                     <Route exact path={`${process.env.PUBLIC_URL}/leaderboard/global`} element={<Leaderboard/>}></Route>
                     <Route exact path={`${process.env.PUBLIC_URL}/leaderboard/:country`} element={<LeaderboardCountry/>}></Route>
+                    <Route exact path={`${process.env.PUBLIC_URL}/maps`} element={<Maps/>}></Route>
+                    <Route exact path={`${process.env.PUBLIC_URL}/map/:id`} element={<Map/>}></Route>
                     <Route path={`${process.env.PUBLIC_URL}/*`} element={<NotFound></NotFound>} ></Route>
                 </Routes>
             </BrowserRouter>

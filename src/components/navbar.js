@@ -16,6 +16,7 @@ export default function CustomNavbar() {
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
                         <Nav.Link as={Link} to={`${process.env.PUBLIC_URL}/leaderboard/global`}>Leaderboard</Nav.Link>
+                        <Nav.Link as={Link} to={`${process.env.PUBLIC_URL}/maps`}>Maps</Nav.Link>
                     </Nav>
                     <Nav className="justify-content-end">
                         <Nav.Link as={Link} to={`https://github.com/intralism-website-revamp`} target='_blank'>GitHub</Nav.Link>
