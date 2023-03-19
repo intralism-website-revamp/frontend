@@ -19,7 +19,7 @@ export default function CustomNavbar() {
                         <Nav.Link as={Link} to={`${process.env.PUBLIC_URL}/maps`}>Maps</Nav.Link>
                     </Nav>
                     <Nav className="justify-content-end">
-                        <Nav.Link as={Link} to={`https://github.com/intralism-website-revamp`} target='_blank'>GitHub</Nav.Link>
+                        <Nav.Link as={Link} to={`https://github.com/intralism-website-revamp`} target='_blank' rel='noreferrer'>GitHub</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>
