@@ -11,3 +11,7 @@
     background-color: #31d2f2;
     margin-left: 10px;
 }
+
+.hidden {
+    display: none;
+}

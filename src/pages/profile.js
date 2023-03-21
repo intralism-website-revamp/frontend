@@ -8,6 +8,7 @@ import Container from "react-bootstrap/Container";
 import {Tooltip} from "@mui/material";
 import styles from "./profile.module.css";
 import PlayerScores from "../components/playerScores";
+import PlayerMissingScores from "../components/playerMissingScores";
 
 export default function Profile() {
     const {id} = useParams();
@@ -45,6 +46,7 @@ export default function Profile() {
                 axios.get(url).then(res => {
                     setPlayer(res.data);
                     setIsPlayerSet(true);
+                    document.getElementById("loadingIndicatorDone").innerHTML = " ";
                 });
             }
             if(!isTagsSet) {
@@ -62,43 +64,85 @@ export default function Profile() {
         textRotation = 'scale(1, -1)'
     }
 
+    function SwitchMissingScores() {
+        document.getElementById("missingScores").classList.toggle(styles.hidden);
+        document.getElementById("missingScoresDownArrow").classList.toggle(styles.hidden);
+        document.getElementById("missingScoresUpArrow").classList.toggle(styles.hidden);
+    }
+
     return(
-        <div>
+        <div style={{transform: textRotation}}>
             <CustomNavbar></CustomNavbar>
             <Container>
                 <Row>
                     <Col xs={3}>
-                        <img src={player.picture} style={{borderRadius: '50%', transform: textRotation}} alt={"player"}/><br/>
+                        <img src={player.picture} style={{borderRadius: '50%'}} alt={"player"}/><br/>
                     </Col>
-                    <Col xs={8}>
-                        <h1 style={{transform: textRotation}}>{player.name}</h1>
+                    <Col xs={7}>
+                        <h1 >{player.name}</h1>
                         {tags && tags.length >= 1 &&
                             <span className={styles.firstBadge}>{tags[0].name}</span>
                         }
                         {tags && tags.map && tags.length > 1 && tags.slice((tags.length * -1) + 1).map(x =>
                             <span className={styles.badge}>{x.name}</span>
                         )}
-                        <div style={{transform: textRotation, whiteSpace: 'nowrap'}}>
+                        <div style={{whiteSpace: 'nowrap'}}>
                             <span style={{fontSize: '30px', whiteSpace: 'nowrap'}}>
                                 #{player.globalRank}
                             </span>
                             <span style={{whiteSpace: 'nowrap', paddingLeft: '30px'}}>
                                 <Tooltip title={player.country}>
-                                    <a href={process.env.PUBLIC_URL + '/leaderboard/' + player.countryShort}><img style={{height: '34px', width: '20px'}} src={process.env.PUBLIC_URL + '/flags/' + player.countryShort + '.svg'} alt={"country flag"}/></a>
+                                    <a href={process.env.PUBLIC_URL + '/leaderboard/' + player.countryShort}><img style={{height: '34px', width: '20px', paddingBottom: "5px"}} src={process.env.PUBLIC_URL + '/flags/' + player.countryShort + '.svg'} alt={"country flag"}/></a>
                                 </Tooltip> #{player.countryRank}
                             </span>
                         </div>
                         <Tooltip title={player.points}>
-                            <p style={{transform: textRotation}}>{player.weightedpp}pp</p>
+                            <p>{player.weightedpp}pp</p>
                         </Tooltip>
                         <a href={"https://intralism.khb-soft.ru/?player=" + id} target='_blank' rel='noreferrer'><img src={process.env.PUBLIC_URL + "/official_intralism.png"} alt={"steam"} style={{height: '25px', width: '25px'}}/></a>
                         <a style={{paddingLeft: '15px'}} href={"https://steamcommunity.com/profiles/" + id} target='_blank' rel='noreferrer'><img src={process.env.PUBLIC_URL + "/steam.png"} alt={"steam"} style={{height: '25px', width: '25px'}}/></a>
                     </Col>
+                    <Col xs={2}>
+                        <br/>
+                        <br/>
+                        <img src={process.env.PUBLIC_URL + "/Grade_SS.svg"} alt="grade ss" style={{width: "35px", height: "35px", marginRight: "5px"}}/>
+                        {player && player.scores && player.scores.filter(x => x.grade.endsWith("SS.svg")).length}
+                        <img src={process.env.PUBLIC_URL + "/Grade_S.svg"} alt="grade s" style={{width: "35px", height: "35px", marginLeft: "10px", marginRight: "5px"}}/>
+                        {player && player.scores && player.scores.filter(x => x.grade.endsWith("_S.svg")).length}
+                        <img src={process.env.PUBLIC_URL + "/Grade_A.svg"} alt="grade a" style={{width: "35px", height: "35px", marginLeft: "10px", marginRight: "5px"}}/>
+                        {player && player.scores && player.scores.filter(x => x.grade.endsWith("A.svg")).length}
+                        <br/>
+                        <img src={process.env.PUBLIC_URL + "/Grade_B.svg"} alt="grade b" style={{width: "35px", height: "35px", marginLeft: "10px", marginRight: "5px"}}/>
+                        {player && player.scores && player.scores.filter(x => x.grade.endsWith("B.svg")).length}
+                        <img src={process.env.PUBLIC_URL + "/Grade_C.svg"} alt="grade c" style={{width: "35px", height: "35px", marginLeft: "10px", marginRight: "5px"}}/>
+                        {player && player.scores && player.scores.filter(x => x.grade.endsWith("C.svg")).length}
+                        <img src={process.env.PUBLIC_URL + "/Grade_F.svg"} alt="grade f" style={{width: "35px", height: "35px", marginLeft: "10px", marginRight: "5px"}}/>
+                        {player && player.scores && player.scores.filter(x => x.grade.endsWith("F.svg")).length}
+                        <br/>
+                        <br/>
+                        <p style={{paddingLeft: "30px", marginBottom: "0"}}>{"Avg Acc: " + player.accuracy + "%"}</p>
+                        <p style={{paddingLeft: "30px"}}>{"Avg Misses: " + player.misses}</p>
+                    </Col>
                 </Row>
             </Container>
-            <br/>
+            <div>
+                <p id={"loadingIndicatorDone"}>Loading</p>
+            </div>
             {player.scores &&
                 <PlayerScores data={player.scores} rowsPerPage={10} />
+            }
+            {player && player.missingScores && player.missingScores.length > 1 &&
+                <>
+                    <br/>
+                    <h3 style={{textAlign: "center"}}>Missing Scores</h3>
+                    <img id={"missingScoresDownArrow"} src={process.env.PUBLIC_URL + "/arrow-down-solid.svg"} style={{height: "30px", width: "30px", position: "absolute", left: "49%"}} onClick={SwitchMissingScores}/>
+                    <img id={"missingScoresUpArrow"} src={process.env.PUBLIC_URL + "/arrow-up-solid.svg"} style={{height: "30px", width: "30px", position: "absolute", left: "49%"}} onClick={SwitchMissingScores} className={styles.hidden}/>
+                    <br/><br/>
+                    <div className={styles.hidden} id={"missingScores"}>
+                        <PlayerMissingScores data={player.missingScores} rowsPerPage={10} />
+                    </div>
+                    
+                </>
             }
         </div>
     );

@@ -26,7 +26,7 @@ const TableLeaderboardMap = ({ data, rowsPerPage, players}) => {
                 <tbody>
                 {slice && slice.map && slice.map((el) => (
                     <tr className={styles.tableRowItems} key={el.id}>
-                        <td className={styles.tableCell}>{slice.findIndex(x => x.player_id === el.player_id) + 1}</td>
+                        <td className={styles.tableCell}>{data.findIndex(x => x.player_id === el.player_id) + 1}</td>
                         <td className={styles.tableCell}><img src={process.env.PUBLIC_URL + '/' + el.grade} alt={"grade"} style={{height: '52px', width: '50px'}}/></td>
                         <td className={styles.tableCell}>
                             <img src={players && players.find(x => x.id === el.player_id) && players.find(x => x.id === el.player_id).image} style={{width: '70px', height: '70px'}} alt={"player"}/>{' '}
