@@ -1,4 +1,3 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
 import CustomNavbar from "../components/navbar";
 import {useParams} from "react-router-dom";
 import React, {useEffect, useState} from "react";
@@ -76,15 +75,22 @@ export default function Profile() {
             <Container>
                 <Row>
                     <Col xs={3}>
-                        <img src={player.picture} style={{borderRadius: '50%'}} alt={"player"}/><br/>
+                        <img src={player.picture} style={{borderRadius: '50%'}} alt={"player"}/>
+                        <br/>
                     </Col>
                     <Col xs={7}>
-                        <h1 >{player.name}</h1>
+                        <h1>
+                            {player.name}
+                        </h1>
                         {tags && tags.length >= 1 &&
-                            <span className={styles.firstBadge}>{tags[0].name}</span>
+                            <span className={styles.firstBadge}>
+                                {tags[0].name}
+                            </span>
                         }
                         {tags && tags.map && tags.length > 1 && tags.slice((tags.length * -1) + 1).map(x =>
-                            <span className={styles.badge}>{x.name}</span>
+                            <span className={styles.badge}>
+                                {x.name}
+                            </span>
                         )}
                         <div style={{whiteSpace: 'nowrap'}}>
                             <span style={{fontSize: '30px', whiteSpace: 'nowrap'}}>
@@ -92,15 +98,25 @@ export default function Profile() {
                             </span>
                             <span style={{whiteSpace: 'nowrap', paddingLeft: '30px'}}>
                                 <Tooltip title={player.country}>
-                                    <a href={process.env.PUBLIC_URL + '/leaderboard/' + player.countryShort}><img style={{height: '34px', width: '20px', paddingBottom: "5px"}} src={process.env.PUBLIC_URL + '/flags/' + player.countryShort + '.svg'} alt={"country flag"}/></a>
+                                    <a href={process.env.PUBLIC_URL + '/leaderboard/' + player.countryShort}>
+                                        <img style={{height: '34px', width: '20px', paddingBottom: "10px"}} src={process.env.PUBLIC_URL + '/flags/' + player.countryShort + '.svg'} alt={"country flag"}/>
+                                    </a>
                                 </Tooltip> #{player.countryRank}
                             </span>
                         </div>
-                        <Tooltip title={player.points}>
-                            <p>{player.weightedpp}pp</p>
-                        </Tooltip>
-                        <a href={"https://intralism.khb-soft.ru/?player=" + id} target='_blank' rel='noreferrer'><img src={process.env.PUBLIC_URL + "/official_intralism.png"} alt={"steam"} style={{height: '25px', width: '25px'}}/></a>
-                        <a style={{paddingLeft: '15px'}} href={"https://steamcommunity.com/profiles/" + id} target='_blank' rel='noreferrer'><img src={process.env.PUBLIC_URL + "/steam.png"} alt={"steam"} style={{height: '25px', width: '25px'}}/></a>
+                        <div style={{marginBottom: "10px"}}>
+                            <Tooltip title={player.points}>
+                                <span>
+                                    {player.weightedpp}pp
+                                </span>
+                            </Tooltip>
+                        </div>
+                        <a href={"https://intralism.khb-soft.ru/?player=" + id} target='_blank' rel='noreferrer'>
+                            <img src={process.env.PUBLIC_URL + "/official_intralism.png"} alt={"steam"} style={{height: '25px', width: '25px'}}/>
+                        </a>
+                        <a style={{paddingLeft: '15px'}} href={"https://steamcommunity.com/profiles/" + id} target='_blank' rel='noreferrer'>
+                            <img src={process.env.PUBLIC_URL + "/steam.png"} alt={"steam"} style={{height: '25px', width: '25px'}}/>
+                        </a>
                     </Col>
                     <Col xs={2}>
                         <br/>
@@ -120,13 +136,19 @@ export default function Profile() {
                         {player && player.scores && player.scores.filter(x => x.grade.endsWith("F.svg")).length}
                         <br/>
                         <br/>
-                        <p style={{paddingLeft: "30px", marginBottom: "0"}}>{"Avg Acc: " + player.accuracy + "%"}</p>
-                        <p style={{paddingLeft: "30px"}}>{"Avg Misses: " + player.misses}</p>
+                        <span style={{paddingLeft: "30px"}}>
+                            {"Avg Acc: " + player.accuracy + "%"}
+                        </span>
+                        <span style={{display: "block", paddingLeft: "30px"}}>
+                            {"Avg Misses: " + player.misses}
+                        </span>
                     </Col>
                 </Row>
             </Container>
-            <div>
-                <p id={"loadingIndicatorDone"}>Loading</p>
+            <div style={{marginBottom: "25px"}}>
+                <span id={"loadingIndicatorDone"}>
+                    Loading
+                </span>
             </div>
             {player.scores &&
                 <PlayerScores data={player.scores} rowsPerPage={10} />
@@ -134,14 +156,16 @@ export default function Profile() {
             {player && player.missingScores && player.missingScores.length > 1 &&
                 <>
                     <br/>
-                    <h3 style={{textAlign: "center"}}>Missing Scores</h3>
-                    <img id={"missingScoresDownArrow"} src={process.env.PUBLIC_URL + "/arrow-down-solid.svg"} style={{height: "30px", width: "30px", position: "absolute", left: "49%"}} onClick={SwitchMissingScores}/>
-                    <img id={"missingScoresUpArrow"} src={process.env.PUBLIC_URL + "/arrow-up-solid.svg"} style={{height: "30px", width: "30px", position: "absolute", left: "49%"}} onClick={SwitchMissingScores} className={styles.hidden}/>
-                    <br/><br/>
+                    <h3 style={{textAlign: "center"}}>
+                        Missing Scores
+                    </h3>
+                    <img id={"missingScoresDownArrow"} src={process.env.PUBLIC_URL + "/arrow-down-solid.svg"} style={{height: "30px", width: "30px", position: "absolute", left: "49%"}} onClick={SwitchMissingScores} alt={"down arrow"}/>
+                    <img id={"missingScoresUpArrow"} src={process.env.PUBLIC_URL + "/arrow-up-solid.svg"} style={{height: "30px", width: "30px", position: "absolute", left: "49%"}} onClick={SwitchMissingScores} className={styles.hidden} alt={"up arrow"}/>
+                    <br/>
+                    <br/>
                     <div className={styles.hidden} id={"missingScores"}>
                         <PlayerMissingScores data={player.missingScores} rowsPerPage={10} />
                     </div>
-                    
                 </>
             }
         </div>

@@ -5,7 +5,7 @@ import TableFooter from "./tableFooter.jsx";
 import {Tooltip} from "@mui/material";
 import axios from "axios";
 
-const TableMaps = ({ data, rowsPerPage }) => {
+export default function TableMaps({ data, rowsPerPage }) {
     const [page, setPage] = useState(1);
     const { slice, range } = useTable(data, page, rowsPerPage);
 
@@ -31,42 +31,59 @@ const TableMaps = ({ data, rowsPerPage }) => {
         }
     });
 
-    // noinspection JSUnresolvedReference
     return (
         <>
             <table className={styles.table}>
                 <thead className={styles.tableRowHeader}>
-                <tr>
-                    <th className={styles.tableHeader}></th>
-                    <th className={styles.tableHeader}>Name</th>
-                    <th className={styles.tableHeader}>PP</th>
-                    <th className={styles.tableHeader}>Status</th>
-                    <th className={styles.tableHeader}>Author</th>
-                </tr>
+                    <tr>
+                        <th className={styles.tableHeader}>
+
+                        </th>
+                        <th className={styles.tableHeader}>
+                            Name
+                        </th>
+                        <th className={styles.tableHeader}>
+                            PP
+                        </th>
+                        <th className={styles.tableHeader}>
+                            Status
+                        </th>
+                        <th className={styles.tableHeader}>
+                            Author
+                        </th>
+                    </tr>
                 </thead>
                 <tbody>
-                {slice && slice.map && slice.map((el) => (
-                    <tr className={styles.tableRowItems} key={el.id}>
-                        <td className={styles.tableCell}><img src={el.image} style={{width: '70px', height: '70px'}} alt={"cover"}/></td>
-                        <td className={styles.tableCell}><a href={process.env.PUBLIC_URL + "/map/" + el.id}>{el.name}</a></td>
-                        <td className={styles.tableCell}>
-                            <Tooltip title={el.points}>
-                                <p>{el.pp}</p>
-                            </Tooltip>
-                        </td>
-                        <td className={styles.tableCell}>{el.status}</td>
-                        <td className={styles.tableCell}>
-                            <a href={process.env.PUBLIC_URL + "/profile/" + el.author} style={{textDecoration: 'none'}}>
-                                {players && players.find(x => x.id === el.author) === undefined ? el.author : players.find(x => x.id === el.author).name}
-                            </a>
-                        </td>
-                    </tr>
-                ))}
+                    {slice && slice.map && slice.map((el) => (
+                        <tr className={styles.tableRowItems} key={el.id}>
+                            <td className={styles.tableCell}>
+                                <img src={el.image} style={{width: '70px', height: '70px'}} alt={"cover"} />
+                            </td>
+                            <td className={styles.tableCell}>
+                                <a href={process.env.PUBLIC_URL + "/map/" + el.id}>
+                                    {el.name}
+                                </a>
+                            </td>
+                            <td className={styles.tableCell}>
+                                <Tooltip title={el.points}>
+                                    <span>
+                                        {el.pp}
+                                    </span>
+                                </Tooltip>
+                            </td>
+                            <td className={styles.tableCell}>
+                                {el.status}
+                            </td>
+                            <td className={styles.tableCell}>
+                                <a href={process.env.PUBLIC_URL + "/profile/" + el.author} style={{textDecoration: 'none'}}>
+                                    {players && players.find(x => x.id === el.author) === undefined ? el.author : players.find(x => x.id === el.author).name}
+                                </a>
+                            </td>
+                        </tr>
+                    ))}
                 </tbody>
             </table>
             <TableFooter range={range} slice={slice} setPage={setPage} page={page} />
         </>
     );
 };
-
-export default TableMaps;

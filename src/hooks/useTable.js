@@ -14,7 +14,7 @@ const sliceData = (data, page, rowsPerPage) => {
     return data.slice((page - 1) * rowsPerPage, page * rowsPerPage);
 };
 
-const useTable = (data, page, rowsPerPage) => {
+export default function useTable(data, page, rowsPerPage) {
     const [tableRange, setTableRange] = useState([]);
     const [slice, setSlice] = useState([]);
 
@@ -28,5 +28,3 @@ const useTable = (data, page, rowsPerPage) => {
 
     return { slice, range: tableRange };
 };
-
-export default useTable;

@@ -1,4 +1,3 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
 import React, {useEffect, useState} from "react";
 import TableLeaderboard from "../components/tableLeaderboard.jsx";
 import CustomNavbar from "../components/navbar";
@@ -28,10 +27,11 @@ export default function Leaderboard() {
     return (
         <>
             <CustomNavbar/>
-            <h1>Global Ranking</h1>
+            <h1>
+                Global Ranking
+            </h1>
             <br/>
             <TableLeaderboard data={players} rowsPerPage={10} />
         </>
-
     );
 }

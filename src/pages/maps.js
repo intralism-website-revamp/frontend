@@ -8,6 +8,7 @@ export default function Maps() {
     const [isMapsSet, setIsMapsSet] = useState(false);
 
     let url;
+
     if(process.env.REACT_APP_STATE === "TEST") {
         url = `http://${process.env.REACT_APP_API_URL}:${process.env.REACT_APP_API_PORT}/maps`;
     } else {
@@ -25,8 +26,10 @@ export default function Maps() {
 
     return (
         <>
-            <CustomNavbar></CustomNavbar>
-            <h1>Ranked Maps</h1>
+            <CustomNavbar />
+            <h1>
+                Ranked Maps
+            </h1>
             <br/>
             <TableMaps data={maps} rowsPerPage={10} />
         </>
