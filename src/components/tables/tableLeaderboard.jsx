@@ -1,35 +1,14 @@
-import React, {useEffect, useState} from "react";
-import useTable from "../hooks/useTable.js";
-import styles from "./tableMaps.module.css";
+import React, { useState } from "react";
+import useTable from "../../hooks/useTable";
+import styles from "./tableLeaderboard.module.css";
 import TableFooter from "./tableFooter.jsx";
 import {Tooltip} from "@mui/material";
-import axios from "axios";
 
-export default function TableMaps({ data, rowsPerPage }) {
+export default function TableLeaderboard({ data, rowsPerPage }) {
     const [page, setPage] = useState(1);
     const { slice, range } = useTable(data, page, rowsPerPage);
 
-    const [players, setPlayers] = useState([]);
-    const [isPlayersSet, setIsPlayersSet] = useState(false);
-
-    let url;
-
-    if(process.env.REACT_APP_STATE === "TEST") {
-        url = `http://${process.env.REACT_APP_API_URL}:${process.env.REACT_APP_API_PORT}/leaderboard`;
-    } else {
-        url = `https://${process.env.REACT_APP_API_URL}/leaderboard`;
-    }
-
-    useEffect(() => {
-        if(!isPlayersSet) {
-            axios.get(url).then(res => {
-                setIsPlayersSet(true);
-                if(res.data !== null) {
-                    setPlayers(res.data);
-                }
-            });
-        }
-    });
+    let regionNames = new Intl.DisplayNames(['en'], {type: 'region'});
 
     return (
         <>
@@ -37,19 +16,22 @@ export default function TableMaps({ data, rowsPerPage }) {
                 <thead className={styles.tableRowHeader}>
                     <tr>
                         <th className={styles.tableHeader}>
-
+                            Rank
                         </th>
                         <th className={styles.tableHeader}>
-                            Name
+                            Player
+                        </th>
+                        <th className={styles.tableHeader}>
+                            Country
                         </th>
                         <th className={styles.tableHeader}>
                             PP
                         </th>
                         <th className={styles.tableHeader}>
-                            Status
+                            AVG Accuracy
                         </th>
                         <th className={styles.tableHeader}>
-                            Author
+                            AVG Misses
                         </th>
                     </tr>
                 </thead>
@@ -57,12 +39,21 @@ export default function TableMaps({ data, rowsPerPage }) {
                     {slice && slice.map && slice.map((el) => (
                         <tr className={styles.tableRowItems} key={el.id}>
                             <td className={styles.tableCell}>
-                                <img src={el.image} style={{width: '70px', height: '70px'}} alt={"cover"} />
+                                {el.rank}
                             </td>
                             <td className={styles.tableCell}>
-                                <a href={process.env.PUBLIC_URL + "/map/" + el.id}>
+                                <img src={el.image} style={{width: '70px', height: '70px'}} alt={"picture of " + el.name}/>
+                                {" "}
+                                <a href={process.env.PUBLIC_URL + "/profile/" + el.id} style={{textDecoration: 'none'}}>
                                     {el.name}
                                 </a>
+                            </td>
+                            <td className={styles.tableCell}>
+                                <Tooltip title={el.country.toUpperCase() === "NONE" ? "Unknown Country" : regionNames.of(el.country.toUpperCase())}>
+                                    <a href={process.env.PUBLIC_URL + '/leaderboard/' + el.country}>
+                                        <img style={{height: '42px', width: '26px'}} src={process.env.PUBLIC_URL + '/flags/' + el.country + '.svg'} alt={"image of " + el.country}/>
+                                    </a>
+                                </Tooltip> #{el.country_rank}
                             </td>
                             <td className={styles.tableCell}>
                                 <Tooltip title={el.points}>
@@ -72,12 +63,10 @@ export default function TableMaps({ data, rowsPerPage }) {
                                 </Tooltip>
                             </td>
                             <td className={styles.tableCell}>
-                                {el.status}
+                                {el.accuracy}
                             </td>
                             <td className={styles.tableCell}>
-                                <a href={process.env.PUBLIC_URL + "/profile/" + el.author} style={{textDecoration: 'none'}}>
-                                    {players && players.find(x => x.id === el.author) === undefined ? el.author : players.find(x => x.id === el.author).name}
-                                </a>
+                                {el.misses}
                             </td>
                         </tr>
                     ))}

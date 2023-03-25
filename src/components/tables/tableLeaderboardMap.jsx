@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import useTable from "../hooks/useTable.js";
+import useTable from "../../hooks/useTable";
 import styles from "./tableMaps.module.css";
 import TableFooter from "./tableFooter.jsx";
 import {Tooltip} from "@mui/material";
@@ -33,6 +33,9 @@ export default function TableLeaderboardMap({ data, rowsPerPage, players}) {
                         </th>
                         <th className={styles.tableHeader}>
                             PP
+                        </th>
+                        <th className={styles.tableHeader}>
+                            Score
                         </th>
                     </tr>
                 </thead>
@@ -76,6 +79,11 @@ export default function TableLeaderboardMap({ data, rowsPerPage, players}) {
                                         {el.pp}
                                     </span>
                                 </Tooltip>
+                            </td>
+                            <td className={styles.tableCell}>
+                                <span>
+                                    {el.score.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                                </span>
                             </td>
                         </tr>
                     ))}

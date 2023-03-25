@@ -9,10 +9,15 @@ import Leaderboard from "./pages/leaderboard";
 import LeaderboardCountry from "./pages/leaderboardCountry";
 import Maps from "./pages/maps";
 import Map from "./pages/map";
+import Callback from "./pages/callback";
+import {AuthenticationGuard} from "./components/authenticationGuard";
+import Account from "./pages/account";
+import {Auth0ProviderWithNavigate} from "./components/auth0-provider-with-navigate";
 
 function Index() {
     return (
-            <BrowserRouter>
+        <BrowserRouter>
+            <Auth0ProviderWithNavigate>
                 <Routes>
                     <Route exact path={`${process.env.PUBLIC_URL}/`} element={<Home/>}></Route>
                     <Route exact path={`${process.env.PUBLIC_URL}/home`} element={<Home/>}></Route>
@@ -21,9 +26,12 @@ function Index() {
                     <Route exact path={`${process.env.PUBLIC_URL}/leaderboard/:country`} element={<LeaderboardCountry/>}></Route>
                     <Route exact path={`${process.env.PUBLIC_URL}/maps`} element={<Maps/>}></Route>
                     <Route exact path={`${process.env.PUBLIC_URL}/map/:id`} element={<Map/>}></Route>
+                    <Route exact path={`${process.env.PUBLIC_URL}/callback`} element={<Callback/>}></Route>
+                    <Route exact path={`${process.env.PUBLIC_URL}/account`} element={<AuthenticationGuard component={Account} />}></Route>
                     <Route path={`${process.env.PUBLIC_URL}/*`} element={<NotFound></NotFound>} ></Route>
                 </Routes>
-            </BrowserRouter>
+            </Auth0ProviderWithNavigate>
+        </BrowserRouter>
     );
 }
 

@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import CustomNavbar from "../components/navbar";
 import axios from "axios";
 import {useParams} from "react-router-dom";
-import TableLeaderboardCountry from "../components/tableLeaderboardCountry";
+import TableLeaderboardCountry from "../components/tables/tableLeaderboardCountry";
 
 export default function LeaderboardCountry() {
     const {country} = useParams();
@@ -10,13 +10,7 @@ export default function LeaderboardCountry() {
     const [players, setPlayers] = useState([]);
     const [arePlayersSet, setArePlayersSet] = useState(false);
 
-    let url;
-
-    if(process.env.REACT_APP_STATE === "TEST") {
-        url = `http://${process.env.REACT_APP_API_URL}:${process.env.REACT_APP_API_PORT}/leaderboard/` + country;
-    } else {
-        url = `https://${process.env.REACT_APP_API_URL}/leaderboard/` + country;
-    }
+    let url = `${process.env.REACT_APP_API_URL}/leaderboard/` + country;
 
     useEffect(() => {
         if(!arePlayersSet) {

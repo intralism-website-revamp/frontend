@@ -6,8 +6,8 @@ import {Col, Row} from "react-bootstrap";
 import Container from "react-bootstrap/Container";
 import {Tooltip} from "@mui/material";
 import styles from "./profile.module.css";
-import PlayerScores from "../components/playerScores";
-import PlayerMissingScores from "../components/playerMissingScores";
+import PlayerScores from "../components/tables/playerScores";
+import PlayerMissingScores from "../components/tables/playerMissingScores";
 
 export default function Profile() {
     const {id} = useParams();
@@ -20,17 +20,9 @@ export default function Profile() {
     const [tags, setTags] = useState([]);
     const [isTagsSet, setIsTagsSet] = useState(false);
 
-    let url, url2, url3;
-
-    if(process.env.REACT_APP_STATE === "TEST") {
-        url = `http://${process.env.REACT_APP_API_URL}:${process.env.REACT_APP_API_PORT}/player/${id}`;
-        url2 = `http://${process.env.REACT_APP_API_URL}:${process.env.REACT_APP_API_PORT}/tags/${id}`;
-        url3 = `http://${process.env.REACT_APP_API_URL}:${process.env.REACT_APP_API_PORT}/playerNoUpdate/${id}`;
-    } else {
-        url = `https://${process.env.REACT_APP_API_URL}/player/${id}`;
-        url2 = `https://${process.env.REACT_APP_API_URL}/tags/${id}`;
-        url3 = `https://${process.env.REACT_APP_API_URL}/playerNoUpdate/${id}`;
-    }
+    let url = `${process.env.REACT_APP_API_URL}/player/${id}`;
+    let url2 = `${process.env.REACT_APP_API_URL}/tags/${id}`;
+    let url3 = `${process.env.REACT_APP_API_URL}/playerNoUpdate/${id}`;
 
     useEffect(() => {
         if(!isInitPlayerSet) {
@@ -60,7 +52,7 @@ export default function Profile() {
     let textRotation = '';
 
     if(id === '76561198815634731') {
-        textRotation = 'scale(1, -1)'
+        textRotation = 'scale(1, -1)';
     }
 
     function SwitchMissingScores() {

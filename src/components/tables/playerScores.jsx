@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import useTable from "../hooks/useTable.js";
+import useTable from "../../hooks/useTable";
 import styles from "./playerScores.module.css";
 import TableFooter from "./tableFooter.jsx";
 import {Tooltip} from "@mui/material";

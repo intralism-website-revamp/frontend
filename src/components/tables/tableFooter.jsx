@@ -8,6 +8,7 @@ const TableFooter = ({ range, setPage, page, slice }) => {
             setPage(page - 1);
         }
     }, [slice, page, setPage]);
+
     return (
         <div className={styles.tableFooter}>
             {range.map((el, index) => (

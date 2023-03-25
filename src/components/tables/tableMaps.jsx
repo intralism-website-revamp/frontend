@@ -1,12 +1,29 @@
-import React, { useState } from "react";
-import useTable from "../hooks/useTable.js";
-import styles from "./tableLeaderboardCountry.module.css";
+import React, {useEffect, useState} from "react";
+import useTable from "../../hooks/useTable";
+import styles from "./tableMaps.module.css";
 import TableFooter from "./tableFooter.jsx";
 import {Tooltip} from "@mui/material";
+import axios from "axios";
 
-export default function TableLeaderboardCountry({ data, rowsPerPage }) {
+export default function TableMaps({ data, rowsPerPage }) {
     const [page, setPage] = useState(1);
     const { slice, range } = useTable(data, page, rowsPerPage);
+
+    const [players, setPlayers] = useState([]);
+    const [isPlayersSet, setIsPlayersSet] = useState(false);
+
+    let url = `${process.env.REACT_APP_API_URL}/leaderboard`;
+
+    useEffect(() => {
+        if(!isPlayersSet) {
+            axios.get(url).then(res => {
+                setIsPlayersSet(true);
+                if(res.data !== null) {
+                    setPlayers(res.data);
+                }
+            });
+        }
+    });
 
     return (
         <>
@@ -14,19 +31,19 @@ export default function TableLeaderboardCountry({ data, rowsPerPage }) {
                 <thead className={styles.tableRowHeader}>
                     <tr>
                         <th className={styles.tableHeader}>
-                            Rank
+
                         </th>
                         <th className={styles.tableHeader}>
-                            Player
+                            Name
                         </th>
                         <th className={styles.tableHeader}>
                             PP
                         </th>
                         <th className={styles.tableHeader}>
-                            AVG Accuracy
+                            Status
                         </th>
                         <th className={styles.tableHeader}>
-                            AVG Misses
+                            Author
                         </th>
                     </tr>
                 </thead>
@@ -34,12 +51,10 @@ export default function TableLeaderboardCountry({ data, rowsPerPage }) {
                     {slice && slice.map && slice.map((el) => (
                         <tr className={styles.tableRowItems} key={el.id}>
                             <td className={styles.tableCell}>
-                                {el.country_rank}
+                                <img src={el.image} style={{width: '70px', height: '70px'}} alt={"cover"} />
                             </td>
                             <td className={styles.tableCell}>
-                                <img src={el.image} style={{width: '70px', height: '70px'}} alt={"picture of " + el.name}/>
-                                {" "}
-                                <a href={process.env.PUBLIC_URL + "/profile/" + el.id} style={{textDecoration: 'none'}}>
+                                <a href={process.env.PUBLIC_URL + "/map/" + el.id}>
                                     {el.name}
                                 </a>
                             </td>
@@ -51,10 +66,12 @@ export default function TableLeaderboardCountry({ data, rowsPerPage }) {
                                 </Tooltip>
                             </td>
                             <td className={styles.tableCell}>
-                                {el.accuracy}
+                                {el.status}
                             </td>
                             <td className={styles.tableCell}>
-                                {el.misses}
+                                <a href={process.env.PUBLIC_URL + "/profile/" + el.author} style={{textDecoration: 'none'}}>
+                                    {players && players.find(x => x.id === el.author) === undefined ? el.author : players.find(x => x.id === el.author).name}
+                                </a>
                             </td>
                         </tr>
                     ))}

@@ -2,8 +2,13 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import { Link } from 'react-router-dom';
+import {useAuth0} from "@auth0/auth0-react";
+import LoginButton from "./buttons/loginButton";
+import LogoutButton from "./buttons/logoutButton";
 
 export default function CustomNavbar() {
+    const { isAuthenticated, user } = useAuth0();
+
     return(
         <div>
             <Container fluid className="p-3">
@@ -23,6 +28,20 @@ export default function CustomNavbar() {
                             </Nav.Link>
                         </Nav>
                         <Nav className="justify-content-end">
+                            {!isAuthenticated && (
+                                <span style={{marginTop: "5px"}}>
+                                    <LoginButton/>
+                                </span>
+                            )}
+                            {isAuthenticated && (
+                                <span style={{marginTop: "5px"}}>
+                                    <a href={process.env.PUBLIC_URL + "/account"} style={{textDecoration: "none"}}>
+                                        {user.name}
+                                    </a>
+                                    {" "}
+                                    <LogoutButton/>
+                                </span>
+                            )}
                             <Nav.Link as={Link} to={`https://github.com/intralism-website-revamp`} target='_blank' rel='noreferrer'>
                                 GitHub
                             </Nav.Link>

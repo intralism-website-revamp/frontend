@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import useTable from "../hooks/useTable.js";
 import styles from "./playerScores.module.css";
 import TableFooter from "./tableFooter.jsx";
+import useTable from "../../hooks/useTable";
 
 export default function PlayerMissingScores({ data, rowsPerPage }) {
     const [page, setPage] = useState(1);

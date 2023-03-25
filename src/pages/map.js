@@ -1,5 +1,5 @@
 import CustomNavbar from "../components/navbar";
-import TableLeaderboardMap from "../components/tableLeaderboardMap";
+import TableLeaderboardMap from "../components/tables/tableLeaderboardMap";
 import React, {useEffect, useState} from "react";
 import axios from "axios";
 import {useParams} from "react-router-dom";
@@ -18,17 +18,9 @@ export default function Map() {
     const [players, setPlayers] = useState([]);
     const [isPlayersSet, setIsPlayersSet] = useState(false);
 
-    let url, url2, url3;
-
-    if(process.env.REACT_APP_STATE === "TEST") {
-        url = `http://${process.env.REACT_APP_API_URL}:${process.env.REACT_APP_API_PORT}/map/` + id;
-        url2 = `http://${process.env.REACT_APP_API_URL}:${process.env.REACT_APP_API_PORT}/scores/` + id;
-        url3 = `http://${process.env.REACT_APP_API_URL}:${process.env.REACT_APP_API_PORT}/leaderboard`;
-    } else {
-        url = `https://${process.env.REACT_APP_API_URL}/map/` + id;
-        url2 = `https://${process.env.REACT_APP_API_URL}/scores/` + id;
-        url3 = `https://${process.env.REACT_APP_API_URL}/leaderboard`;
-    }
+    let url = `${process.env.REACT_APP_API_URL}/map/` + id;
+    let url2 = `${process.env.REACT_APP_API_URL}/scores/` + id;
+    let url3 = `${process.env.REACT_APP_API_URL}/leaderboard`;
 
     useEffect(() => {
         if(!isMapSet) {
