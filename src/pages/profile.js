@@ -8,9 +8,11 @@ import {Tooltip} from "@mui/material";
 import styles from "./profile.module.css";
 import PlayerScores from "../components/tables/playerScores";
 import PlayerMissingScores from "../components/tables/playerMissingScores";
+import {useAuth0} from "@auth0/auth0-react";
 
 export default function Profile() {
     const {id} = useParams();
+    const { user, getAccessTokenSilently, isLoading} = useAuth0();
 
     const [isInitPlayerSet, setIsInitPlayerSet] = useState(false);
 
@@ -20,11 +22,17 @@ export default function Profile() {
     const [tags, setTags] = useState([]);
     const [isTagsSet, setIsTagsSet] = useState(false);
 
+    const [userInfo, setUserInfo] = useState();
+    const [isUserInfoSet, setIsUserInfoSet] = useState(false);
+
     let url = `${process.env.REACT_APP_API_URL}/player/${id}`;
     let url2 = `${process.env.REACT_APP_API_URL}/tags/${id}`;
     let url3 = `${process.env.REACT_APP_API_URL}/playerNoUpdate/${id}`;
 
     useEffect(() => {
+        if(!isUserInfoSet) {
+            getUserInfo();
+        }
         if(!isInitPlayerSet) {
             axios.get(url3).then(res => {
                 setIsInitPlayerSet(true);
@@ -61,6 +69,28 @@ export default function Profile() {
         document.getElementById("missingScoresUpArrow").classList.toggle(styles.hidden);
     }
 
+    const getUserInfo = async () => {
+        if(isLoading) {
+            return;
+        }
+
+        const accessToken = await getAccessTokenSilently();
+
+        const config = {
+            url: `${process.env.REACT_APP_API_URL}/userInfo/` + user.email,
+            method: "GET",
+            headers: {
+                "content-type": "application/json",
+                Authorization: `Bearer ${accessToken}`,
+            },
+        };
+
+        let res = await axios(config);
+        setIsUserInfoSet(true);
+        setUserInfo(res.data);
+        console.log("user info set");
+    };
+
     return(
         <div style={{transform: textRotation}}>
             <CustomNavbar></CustomNavbar>
@@ -73,6 +103,11 @@ export default function Profile() {
                     <Col xs={7}>
                         <h1>
                             {player.name}
+                            {userInfo && userInfo.steam_id === id &&
+                                <span style={{fontSize: "15px"}}>
+                                    {" "}(you)
+                                </span>
+                            }
                         </h1>
                         {tags && tags.length >= 1 &&
                             <span className={styles.firstBadge}>

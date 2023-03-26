@@ -4,13 +4,23 @@ import styles from "./tableMaps.module.css";
 import TableFooter from "./tableFooter.jsx";
 import {Tooltip} from "@mui/material";
 import axios from "axios";
+import {useAuth0} from "@auth0/auth0-react";
+import Popup from "reactjs-popup";
 
 export default function TableMaps({ data, rowsPerPage }) {
+    const { isAuthenticated, getAccessTokenSilently } = useAuth0();
+
+    const [permitted, setPermitted] = useState();
     const [page, setPage] = useState(1);
     const { slice, range } = useTable(data, page, rowsPerPage);
 
     const [players, setPlayers] = useState([]);
     const [isPlayersSet, setIsPlayersSet] = useState(false);
+
+    const [formValue, setformValue] = useState({
+        removeReason: '',
+        removedBy: ''
+    });
 
     let url = `${process.env.REACT_APP_API_URL}/leaderboard`;
 
@@ -23,7 +33,60 @@ export default function TableMaps({ data, rowsPerPage }) {
                 }
             });
         }
+        if(isAuthenticated) {
+            getPermitted();
+        }
     });
+
+    const getPermitted = async () => {
+        const accessToken = await getAccessTokenSilently();
+
+        const config = {
+            url: `${process.env.REACT_APP_API_URL}/mapPermissions`,
+            method: "GET",
+            headers: {
+                "content-type": "application/json",
+                Authorization: `Bearer ${accessToken}`,
+            },
+        };
+
+        let res = await axios(config);
+        setPermitted(res.data);
+    };
+
+    const handleDeleteMap = async(e) => {
+        const formData = new FormData();
+        formData.append("removeReason", formValue.removeReason);
+        formData.append("removedBy", formValue.removedBy);
+        formData.append("mapId", e.target.dataset.mapid);
+        formData.append("mapName", e.target.dataset.mapname);
+        formData.append("mapImage", e.target.dataset.mapimage);
+
+        const accessToken = await getAccessTokenSilently();
+
+        try {
+            const response = await axios({
+                method: "post",
+                url: `${process.env.REACT_APP_API_URL}/removeMap`,
+                data: formData,
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                    Authorization: `Bearer ${accessToken}`
+                },
+            });
+
+            console.log(response);
+        } catch(error) {
+            console.log(error)
+        }
+    }
+
+    const handleChange = (event) => {
+        setformValue({
+            ...formValue,
+            [event.target.name]: event.target.value
+        });
+    }
 
     return (
         <>
@@ -45,6 +108,11 @@ export default function TableMaps({ data, rowsPerPage }) {
                         <th className={styles.tableHeader}>
                             Author
                         </th>
+                        {permitted &&
+                            <th className={styles.tableHeader}>
+
+                            </th>
+                        }
                     </tr>
                 </thead>
                 <tbody>
@@ -73,6 +141,36 @@ export default function TableMaps({ data, rowsPerPage }) {
                                     {players && players.find(x => x.id === el.author) === undefined ? el.author : players.find(x => x.id === el.author).name}
                                 </a>
                             </td>
+                            {permitted &&
+                                <td>
+                                    <Popup trigger={<button>Delete</button>} modal nested keepTooltipInside={".popupBoundary"}>
+                                        <div style={{padding: "10px"}}>
+                                            <h3>
+                                                Remove map
+                                            </h3>
+                                            <span>
+                                                {el.name}
+                                            </span>
+                                            <form>
+                                                <label htmlFor={"mapRemoveReason"}>
+                                                    Reason
+                                                </label>
+                                                <br/>
+                                                <input type={"text"} id={"mapRemoveReason"} name={"removeReason"} value={formValue.removeReason} onChange={handleChange}/>
+                                                <br/>
+                                                <label htmlFor={"mapRemovedBy"}>
+                                                    Removed by
+                                                </label>
+                                                <br/>
+                                                <input type={"text"} id={"mapRemovedBy"} name={"removedBy"} value={formValue.removedBy} onChange={handleChange}/>
+                                                <br/>
+                                                <br/>
+                                                <input type={"button"} value={"Remove map"} onClick={handleDeleteMap} data-mapid={el.id} data-mapname={el.name} data-mapimage={el.image}/>
+                                            </form>
+                                        </div>
+                                    </Popup>
+                                </td>
+                            }
                         </tr>
                     ))}
                 </tbody>

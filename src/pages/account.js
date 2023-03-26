@@ -4,14 +4,21 @@ import CustomNavbar from "../components/navbar";
 import axios from 'axios';
 
 export default function Account() {
-    const { user, getAccessTokenSilently } = useAuth0();
-    const [message, setMessage] = useState();
+    const { user, getAccessTokenSilently} = useAuth0();
+    const [userInfo, setUserInfo] = useState();
+    const [isUserInfoSet, setIsUserInfoSet] = useState(false);
 
-    const getMessage = async () => {
+    useEffect(() => {
+        if(!isUserInfoSet) {
+            getUserInfo();
+        }
+    });
+
+    const getUserInfo = async () => {
         const accessToken = await getAccessTokenSilently();
 
         const config = {
-            url: `${process.env.REACT_APP_API_URL}/authtest`,
+            url: `${process.env.REACT_APP_API_URL}/userInfo/` + user.email,
             method: "GET",
             headers: {
                 "content-type": "application/json",
@@ -20,12 +27,9 @@ export default function Account() {
         };
 
         let res = await axios(config);
-        setMessage(res.data);
+        setIsUserInfoSet(true);
+        setUserInfo(res.data);
     };
-
-    useEffect(() => {
-        getMessage();
-    });
 
     return(
         <>
@@ -38,10 +42,19 @@ export default function Account() {
                 {user.name}
             </span>
             <br/>
-            {message &&
-                <span>
-                    {message}
-                </span>
+            {userInfo &&
+                <>
+                    {userInfo.discord_id &&
+                        <span style={{display: "block"}}>
+                            Discord: {userInfo.discord_id}
+                        </span>
+                    }
+                    {userInfo.steam_id &&
+                        <span>
+                            Steam: {userInfo.steam_id}
+                        </span>
+                    }
+                </>
             }
         </>
     );
