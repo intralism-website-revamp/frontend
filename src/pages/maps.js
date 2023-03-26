@@ -16,7 +16,6 @@ export default function Maps() {
         id: '',
         name: '',
         points: '',
-        pp: '',
         score: '',
         status: '',
         image: '',
@@ -59,7 +58,6 @@ export default function Maps() {
         formData.append("id", formValue.id);
         formData.append("name", formValue.name);
         formData.append("points", formValue.points);
-        formData.append("pp", formValue.pp);
         formData.append("score", formValue.score);
         formData.append("status", formValue.status);
         formData.append("image", formValue.image);
@@ -123,12 +121,6 @@ export default function Maps() {
                                 </label>
                                 <br/>
                                 <input type={"text"} id={"mappoints"} name={"points"} value={formValue.points} onChange={handleChange}/>
-                                <br/>
-                                <label htmlFor={"mappp"}>
-                                    PP
-                                </label>
-                                <br/>
-                                <input type={"text"} id={"mappp"} name={"pp"} value={formValue.pp} onChange={handleChange}/>
                                 <br/>
                                 <label htmlFor={"mapscore"}>
                                     Score
