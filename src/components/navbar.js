@@ -17,7 +17,7 @@ export default function CustomNavbar() {
     const [isUserInfoSet, setIsUserInfoSet] = useState(false);
 
     useEffect(() => {
-        if(!isUserInfoSet) {
+        if(!isUserInfoSet && isAuthenticated) {
             getUserInfo();
         }
     });

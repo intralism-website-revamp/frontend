@@ -17,10 +17,12 @@ export default function TableMaps({ data, rowsPerPage }) {
     const [players, setPlayers] = useState([]);
     const [isPlayersSet, setIsPlayersSet] = useState(false);
 
-    const [formValue, setformValue] = useState({
+    let formDefaultValues = {
         removeReason: '',
         removedBy: ''
-    });
+    };
+
+    const [formValue, setformValue] = useState(formDefaultValues);
 
     let url = `${process.env.REACT_APP_API_URL}/leaderboard`;
 
@@ -65,7 +67,7 @@ export default function TableMaps({ data, rowsPerPage }) {
         const accessToken = await getAccessTokenSilently();
 
         try {
-            const response = await axios({
+            await axios({
                 method: "post",
                 url: `${process.env.REACT_APP_API_URL}/removeMap`,
                 data: formData,
@@ -75,10 +77,14 @@ export default function TableMaps({ data, rowsPerPage }) {
                 },
             });
 
-            console.log(response);
+            ClearFormData();
         } catch(error) {
             console.log(error)
         }
+    }
+
+    function ClearFormData() {
+        setformValue(formDefaultValues);
     }
 
     const handleChange = (event) => {

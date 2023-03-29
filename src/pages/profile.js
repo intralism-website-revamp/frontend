@@ -12,7 +12,7 @@ import {useAuth0} from "@auth0/auth0-react";
 
 export default function Profile() {
     const {id} = useParams();
-    const { user, getAccessTokenSilently, isLoading} = useAuth0();
+    const { user, getAccessTokenSilently, isLoading, isAuthenticated} = useAuth0();
 
     const [isInitPlayerSet, setIsInitPlayerSet] = useState(false);
 
@@ -70,7 +70,7 @@ export default function Profile() {
     }
 
     const getUserInfo = async () => {
-        if(isLoading) {
+        if(isLoading || !isAuthenticated) {
             return;
         }
 

@@ -12,7 +12,8 @@ export default function Maps() {
     const [permitted, setPermitted] = useState();
     const [maps, setMaps] = useState([]);
     const [isMapsSet, setIsMapsSet] = useState(false);
-    const [formValue, setformValue] = useState({
+
+    let formDefaultValues = {
         id: '',
         name: '',
         points: '',
@@ -21,7 +22,9 @@ export default function Maps() {
         image: '',
         author: '',
         nominator: ''
-    });
+    };
+
+    const [formValue, setformValue] = useState(formDefaultValues);
 
     let url = `${process.env.REACT_APP_API_URL}/maps`;
 
@@ -67,7 +70,7 @@ export default function Maps() {
         const accessToken = await getAccessTokenSilently();
 
         try {
-            const response = await axios({
+            await axios({
                 method: "post",
                 url: `${process.env.REACT_APP_API_URL}/addMap`,
                 data: formData,
@@ -77,10 +80,14 @@ export default function Maps() {
                 },
             });
 
-            console.log(response);
+            ClearFormData();
         } catch(error) {
             console.log(error)
         }
+    }
+
+    function ClearFormData() {
+        setformValue(formDefaultValues);
     }
 
     const handleChange = (event) => {
