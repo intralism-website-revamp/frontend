@@ -22,6 +22,9 @@ const TableFooter = ({ range, setPage, page, slice }) => {
         }
 
         while(startPoint < endPoint) {
+            if(startPoint > range.length - 1) {
+                break;
+            }
             tempRange.push(range[startPoint]);
             startPoint++;
         }
