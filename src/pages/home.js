@@ -1,4 +1,3 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
 import CustomNavbar from "../components/navbar";
 import React from "react";
 

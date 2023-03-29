@@ -13,6 +13,8 @@ import Callback from "./pages/callback";
 import {AuthenticationGuard} from "./components/authenticationGuard";
 import Account from "./pages/account";
 import {Auth0ProviderWithNavigate} from "./components/auth0-provider-with-navigate";
+import GettingStarted from "./pages/modding/gettingStarted";
+import Mods from "./pages/modding/mods.js";
 
 function Index() {
     return (
@@ -28,6 +30,8 @@ function Index() {
                     <Route exact path={`${process.env.PUBLIC_URL}/map/:id`} element={<Map/>}></Route>
                     <Route exact path={`${process.env.PUBLIC_URL}/callback`} element={<Callback/>}></Route>
                     <Route exact path={`${process.env.PUBLIC_URL}/account`} element={<AuthenticationGuard component={Account} />}></Route>
+                    <Route exact path={`${process.env.PUBLIC_URL}/modding/gettingstarted`} element={<GettingStarted/>}></Route>
+                    <Route exact path={`${process.env.PUBLIC_URL}/modding/mods`} element={<Mods/>}></Route>
                     <Route path={`${process.env.PUBLIC_URL}/*`} element={<NotFound></NotFound>} ></Route>
                 </Routes>
             </Auth0ProviderWithNavigate>

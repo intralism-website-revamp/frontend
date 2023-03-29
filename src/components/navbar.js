@@ -7,6 +7,8 @@ import LogoutButton from "./buttons/logoutButton";
 import {NavDropdown} from "react-bootstrap";
 import axios from "axios";
 import {useEffect, useState} from "react";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import "./navbar.css";
 
 export default function CustomNavbar() {
     const { isAuthenticated, user, getAccessTokenSilently } = useAuth0();
@@ -54,6 +56,10 @@ export default function CustomNavbar() {
                             <Nav.Link href={`${process.env.PUBLIC_URL}/maps`}>
                                 Maps
                             </Nav.Link>
+                            <NavDropdown title={"Modding"} id="basic-nav-dropdown" renderMenuOnMount={true}>
+                                <NavDropdown.Item href={`${process.env.PUBLIC_URL}/modding/gettingstarted`}>Getting Started</NavDropdown.Item>
+                                <NavDropdown.Item href={`${process.env.PUBLIC_URL}/modding/mods`}>Mods</NavDropdown.Item>
+                            </NavDropdown>
                         </Nav>
                         <Nav className="justify-content-end">
                             {!isAuthenticated &&
@@ -63,14 +69,13 @@ export default function CustomNavbar() {
                             }
                             {isAuthenticated &&
                                 <>
-                                    <NavDropdown title={user.name} id="basic-nav-dropdown">
+                                    <NavDropdown title={user.name} id="basic-nav-dropdown" renderMenuOnMount={true}>
                                         {userInfo && userInfo.steam_id &&
                                             <NavDropdown.Item href={`${process.env.PUBLIC_URL}/profile/${userInfo.steam_id}`} >Profile</NavDropdown.Item>
                                         }
                                         <NavDropdown.Item href={`${process.env.PUBLIC_URL}/account`}>Settings</NavDropdown.Item>
                                         <NavDropdown.Item><LogoutButton /></NavDropdown.Item>
                                     </NavDropdown>
-
                                 </>
                             }
                             <Nav.Link href={`https://github.com/intralism-website-revamp`} target='_blank' rel='noreferrer'>
