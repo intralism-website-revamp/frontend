@@ -7,6 +7,8 @@ export default function Account() {
     const { user, getAccessTokenSilently} = useAuth0();
     const [userInfo, setUserInfo] = useState();
     const [isUserInfoSet, setIsUserInfoSet] = useState(false);
+    const [isForceUpdateMessageVisible, setIsForceUpdateMessageVisible] = useState(false);
+    const [forceUpdateMessage, setForceUpdateMessage] = useState(false);
 
     useEffect(() => {
         if(!isUserInfoSet) {
@@ -31,6 +33,24 @@ export default function Account() {
         setUserInfo(res.data);
     };
 
+    async function ForceUpdateScores() {
+        setIsForceUpdateMessageVisible(false);
+        const accessToken = await getAccessTokenSilently();
+
+        const config = {
+            url: `${process.env.REACT_APP_API_URL}/forceUpdatePlayer/` + user.email,
+            method: "GET",
+            headers: {
+                "content-type": "application/json",
+                Authorization: `Bearer ${accessToken}`,
+            },
+        };
+
+        let res = await axios(config);
+        setForceUpdateMessage(res.data);
+        setIsForceUpdateMessageVisible(true);
+    }
+
     return(
         <>
             <CustomNavbar/>
@@ -53,6 +73,18 @@ export default function Account() {
                         <span>
                             Steam: {userInfo.steam_id}
                         </span>
+                    }
+                    {userInfo.email && userInfo.steam_id &&
+                        <div>
+                            <button onClick={ForceUpdateScores}>
+                                Force Update Scores
+                            </button>
+                            {isForceUpdateMessageVisible && forceUpdateMessage &&
+                                <p style={{display: "inline"}}>
+                                    {forceUpdateMessage}
+                                </p>
+                            }
+                        </div>
                     }
                 </>
             }
