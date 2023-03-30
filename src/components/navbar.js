@@ -15,10 +15,12 @@ export default function CustomNavbar() {
 
     const [userInfo, setUserInfo] = useState();
     const [isUserInfoSet, setIsUserInfoSet] = useState(false);
+    const [adminPermitted, setAdminPermitted] = useState();
 
     useEffect(() => {
         if(!isUserInfoSet && isAuthenticated) {
             getUserInfo();
+            getAdminPermitted();
         }
     });
 
@@ -37,6 +39,22 @@ export default function CustomNavbar() {
         let res = await axios(config);
         setIsUserInfoSet(true);
         setUserInfo(res.data);
+    };
+
+    const getAdminPermitted = async () => {
+        const accessToken = await getAccessTokenSilently();
+
+        const config = {
+            url: `${process.env.REACT_APP_API_URL}/adminPermission`,
+            method: "GET",
+            headers: {
+                "content-type": "application/json",
+                Authorization: `Bearer ${accessToken}`,
+            },
+        };
+
+        let res = await axios(config);
+        setAdminPermitted(res.data);
     };
 
     return(
@@ -69,6 +87,11 @@ export default function CustomNavbar() {
                             }
                             {isAuthenticated &&
                                 <>
+                                    {adminPermitted &&
+                                        <Nav.Link href={`${process.env.PUBLIC_URL}/admin`}>
+                                            Admin
+                                        </Nav.Link>
+                                    }
                                     <NavDropdown title={user.name} id="basic-nav-dropdown" renderMenuOnMount={true}>
                                         {userInfo && userInfo.steam_id &&
                                             <NavDropdown.Item href={`${process.env.PUBLIC_URL}/profile/${userInfo.steam_id}`} >Profile</NavDropdown.Item>
