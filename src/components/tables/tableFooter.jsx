@@ -13,6 +13,10 @@ const TableFooter = ({ range, setPage, page, slice }) => {
         let startPoint = parseInt(page) - 5;
         let endPoint = startPoint + 10;
 
+        if(startPoint > 1) {
+            tempRange.push(1);
+        }
+
         if(startPoint < 0) {
             startPoint = 0;
             endPoint = 10;
@@ -26,6 +30,10 @@ const TableFooter = ({ range, setPage, page, slice }) => {
             }
             tempRange.push(range[startPoint]);
             startPoint++;
+        }
+
+        if(endPoint < range[range.length - 1]) {
+            tempRange.push(range[range.length - 1]);
         }
 
         setActualRange(tempRange);
