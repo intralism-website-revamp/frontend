@@ -24,7 +24,7 @@ export default function TableMaps({ data, rowsPerPage }) {
 
     const [formValue, setformValue] = useState(formDefaultValues);
 
-    let url = `${process.env.REACT_APP_API_URL}/leaderboard`;
+    let url = `${process.env.REACT_APP_API_URL}/leaderboard/global`;
 
     useEffect(() => {
         if(!isPlayersSet) {
@@ -44,7 +44,7 @@ export default function TableMaps({ data, rowsPerPage }) {
         const accessToken = await getAccessTokenSilently();
 
         const config = {
-            url: `${process.env.REACT_APP_API_URL}/mapPermissions`,
+            url: `${process.env.REACT_APP_API_URL}/permission/map`,
             method: "GET",
             headers: {
                 "content-type": "application/json",
@@ -69,7 +69,7 @@ export default function TableMaps({ data, rowsPerPage }) {
         try {
             await axios({
                 method: "post",
-                url: `${process.env.REACT_APP_API_URL}/removeMap`,
+                url: `${process.env.REACT_APP_API_URL}/maps/remove`,
                 data: formData,
                 headers: {
                     "Content-Type": "multipart/form-data",

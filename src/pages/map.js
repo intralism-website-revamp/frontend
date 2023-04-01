@@ -18,9 +18,9 @@ export default function Map() {
     const [players, setPlayers] = useState([]);
     const [isPlayersSet, setIsPlayersSet] = useState(false);
 
-    let url = `${process.env.REACT_APP_API_URL}/map/` + id;
-    let url2 = `${process.env.REACT_APP_API_URL}/scores/` + id;
-    let url3 = `${process.env.REACT_APP_API_URL}/leaderboard`;
+    let url = `${process.env.REACT_APP_API_URL}/maps/byid/` + id;
+    let url2 = `${process.env.REACT_APP_API_URL}/maps/scores/` + id;
+    let url3 = `${process.env.REACT_APP_API_URL}/leaderboard/global`;
 
     useEffect(() => {
         if(!isMapSet) {

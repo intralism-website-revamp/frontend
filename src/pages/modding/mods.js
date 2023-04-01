@@ -8,7 +8,7 @@ export default function Mods() {
     const [mods, setMods] = useState();
     const [isModsSet, setIsModsSet] = useState(false);
 
-    let url = `${process.env.REACT_APP_API_URL}/mods`
+    let url = `${process.env.REACT_APP_API_URL}/mods/all`
 
     useState(() => {
        if(!isModsSet) {

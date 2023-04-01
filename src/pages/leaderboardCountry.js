@@ -10,7 +10,7 @@ export default function LeaderboardCountry() {
     const [players, setPlayers] = useState([]);
     const [arePlayersSet, setArePlayersSet] = useState(false);
 
-    let url = `${process.env.REACT_APP_API_URL}/leaderboard/` + country;
+    let url = `${process.env.REACT_APP_API_URL}/leaderboard/country/` + country;
 
     useEffect(() => {
         if(!arePlayersSet) {

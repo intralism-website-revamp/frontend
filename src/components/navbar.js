@@ -28,7 +28,7 @@ export default function CustomNavbar() {
         const accessToken = await getAccessTokenSilently();
 
         const config = {
-            url: `${process.env.REACT_APP_API_URL}/userInfo/` + user.email,
+            url: `${process.env.REACT_APP_API_URL}/user/info` + user.email,
             method: "GET",
             headers: {
                 "content-type": "application/json",
@@ -45,7 +45,7 @@ export default function CustomNavbar() {
         const accessToken = await getAccessTokenSilently();
 
         const config = {
-            url: `${process.env.REACT_APP_API_URL}/adminPermission`,
+            url: `${process.env.REACT_APP_API_URL}/permission/admin`,
             method: "GET",
             headers: {
                 "content-type": "application/json",

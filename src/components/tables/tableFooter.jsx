@@ -1,5 +1,4 @@
 import React, {useEffect, useState} from "react";
-
 import styles from "./tableFooter.module.css";
 
 const TableFooter = ({ range, setPage, page, slice }) => {

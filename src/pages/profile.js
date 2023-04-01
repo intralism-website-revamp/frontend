@@ -25,9 +25,9 @@ export default function Profile() {
     const [userInfo, setUserInfo] = useState();
     const [isUserInfoSet, setIsUserInfoSet] = useState(false);
 
-    let url = `${process.env.REACT_APP_API_URL}/player/${id}`;
+    let url = `${process.env.REACT_APP_API_URL}/player/update/${id}`;
     let url2 = `${process.env.REACT_APP_API_URL}/tags/${id}`;
-    let url3 = `${process.env.REACT_APP_API_URL}/playerNoUpdate/${id}`;
+    let url3 = `${process.env.REACT_APP_API_URL}/player/noupdate/${id}`;
 
     useEffect(() => {
         if(!isUserInfoSet) {
