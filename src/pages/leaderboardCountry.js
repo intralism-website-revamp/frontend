@@ -27,7 +27,11 @@ export default function LeaderboardCountry() {
     if(country.toLowerCase() === "none") {
         countryName = "Unknown Country";
     } else {
-        countryName = regionNames.of(country.toUpperCase());
+        try {
+            countryName = regionNames.of(country.toUpperCase());
+        } catch(err) {
+            countryName = "Country doesn't exist";
+        }
     }
 
     return (
