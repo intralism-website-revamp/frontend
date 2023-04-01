@@ -17,12 +17,21 @@ export default function TableMaps({ data, rowsPerPage }) {
     const [players, setPlayers] = useState([]);
     const [isPlayersSet, setIsPlayersSet] = useState(false);
 
-    let formDefaultValues = {
+    let formDeleteDefaultValues = {
         removeReason: '',
         removedBy: ''
     };
 
-    const [formValue, setformValue] = useState(formDefaultValues);
+    let formEditDefaultValues = {
+        name: '',
+        points: '',
+        score: '',
+        status: '',
+        image: '',
+    };
+
+    const [formDeleteValue, setFormDeleteValue] = useState(formDeleteDefaultValues);
+    const [formEditValue, setFormEditValue] = useState(formEditDefaultValues);
 
     let url = `${process.env.REACT_APP_API_URL}/leaderboard/global`;
 
@@ -58,8 +67,8 @@ export default function TableMaps({ data, rowsPerPage }) {
 
     const handleDeleteMap = async(e) => {
         const formData = new FormData();
-        formData.append("removeReason", formValue.removeReason);
-        formData.append("removedBy", formValue.removedBy);
+        formData.append("removeReason", formDeleteValue.removeReason);
+        formData.append("removedBy", formDeleteValue.removedBy);
         formData.append("mapId", e.target.dataset.mapid);
         formData.append("mapName", e.target.dataset.mapname);
         formData.append("mapImage", e.target.dataset.mapimage);
@@ -83,13 +92,49 @@ export default function TableMaps({ data, rowsPerPage }) {
         }
     }
 
-    function ClearFormData() {
-        setformValue(formDefaultValues);
+    const handleEditMap = async(e) => {
+        const formData = new FormData();
+        formData.append("name", formEditValue.name);
+        formData.append("status", formEditValue.status);
+        formData.append("score", formEditValue.score);
+        formData.append("points", formEditValue.points);
+        formData.append("image", formEditValue.image);
+        formData.append("mapId", e.target.dataset.mapid);
+
+        const accessToken = await getAccessTokenSilently();
+
+        try {
+            await axios({
+                method: "post",
+                url: `${process.env.REACT_APP_API_URL}/maps/edit`,
+                data: formData,
+                headers: {
+                    "Content-Type": "multipart/form-data",
+                    Authorization: `Bearer ${accessToken}`
+                },
+            });
+
+            ClearFormData();
+        } catch(error) {
+            console.log(error)
+        }
     }
 
-    const handleChange = (event) => {
-        setformValue({
-            ...formValue,
+    function ClearFormData() {
+        setFormDeleteValue(formDeleteDefaultValues);
+        setFormEditValue(formEditDefaultValues);
+    }
+
+    const handleDeleteChange = (event) => {
+        setFormDeleteValue({
+            ...formDeleteValue,
+            [event.target.name]: event.target.value
+        });
+    }
+
+    const handleEditChange = (event) => {
+        setFormEditValue({
+            ...formEditValue,
             [event.target.name]: event.target.value
         });
     }
@@ -149,6 +194,51 @@ export default function TableMaps({ data, rowsPerPage }) {
                             </td>
                             {permitted &&
                                 <td>
+                                    <Popup trigger={<button>Edit</button>} modal nested keepTooltipInside={".popupBoundary"}>
+                                        <div style={{padding: "10px"}}>
+                                            <h3>
+                                                Edit map
+                                            </h3>
+                                            <span>
+                                                {el.name}
+                                            </span>
+                                            <form>
+                                                <label htmlFor={"mapEditName"}>
+                                                    Name
+                                                </label>
+                                                <br/>
+                                                <input type={"text"} id={"mapEditName"} name={"name"} value={formEditValue.name} onChange={handleEditChange}/>
+                                                <br/>
+                                                <label htmlFor={"mapEditPoints"}>
+                                                    Points
+                                                </label>
+                                                <br/>
+                                                <input type={"text"} id={"mapEditPoints"} name={"points"} value={formEditValue.points} onChange={handleEditChange}/>
+                                                <br/>
+                                                <label htmlFor={"mapEditScore"}>
+                                                    Score
+                                                </label>
+                                                <br/>
+                                                <input type={"text"} id={"mapEditScore"} name={"score"} value={formEditValue.score} onChange={handleEditChange}/>
+                                                <br/>
+                                                <label htmlFor={"mapEditStatus"}>
+                                                    Status
+                                                </label>
+                                                <br/>
+                                                <input type={"text"} id={"mapEditStatus"} name={"status"} value={formEditValue.status} onChange={handleEditChange}/>
+                                                <br/>
+                                                <label htmlFor={"mapEditImage"}>
+                                                    Image URL
+                                                </label>
+                                                <br/>
+                                                <input type={"text"} id={"mapEditImage"} name={"image"} value={formEditValue.image} onChange={handleEditChange}/>
+                                                <br/>
+                                                <br/>
+                                                <input type={"button"} value={"Edit map"} onClick={handleEditMap} data-mapid={el.id}/>
+                                            </form>
+                                        </div>
+                                    </Popup>
+                                    <br/>
                                     <Popup trigger={<button>Delete</button>} modal nested keepTooltipInside={".popupBoundary"}>
                                         <div style={{padding: "10px"}}>
                                             <h3>
@@ -162,13 +252,13 @@ export default function TableMaps({ data, rowsPerPage }) {
                                                     Reason
                                                 </label>
                                                 <br/>
-                                                <input type={"text"} id={"mapRemoveReason"} name={"removeReason"} value={formValue.removeReason} onChange={handleChange}/>
+                                                <input type={"text"} id={"mapRemoveReason"} name={"removeReason"} value={formDeleteValue.removeReason} onChange={handleDeleteChange}/>
                                                 <br/>
                                                 <label htmlFor={"mapRemovedBy"}>
                                                     Removed by
                                                 </label>
                                                 <br/>
-                                                <input type={"text"} id={"mapRemovedBy"} name={"removedBy"} value={formValue.removedBy} onChange={handleChange}/>
+                                                <input type={"text"} id={"mapRemovedBy"} name={"removedBy"} value={formDeleteValue.removedBy} onChange={handleDeleteChange}/>
                                                 <br/>
                                                 <br/>
                                                 <input type={"button"} value={"Remove map"} onClick={handleDeleteMap} data-mapid={el.id} data-mapname={el.name} data-mapimage={el.image}/>
