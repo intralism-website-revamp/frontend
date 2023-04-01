@@ -8,7 +8,9 @@ export default function Account() {
     const [userInfo, setUserInfo] = useState();
     const [isUserInfoSet, setIsUserInfoSet] = useState(false);
     const [isForceUpdateMessageVisible, setIsForceUpdateMessageVisible] = useState(false);
-    const [forceUpdateMessage, setForceUpdateMessage] = useState(false);
+    const [forceUpdateMessage, setForceUpdateMessage] = useState();
+    const [deleteScoresMessage, setDeleteScoresMessage] = useState();
+    const [isDeleteScoresMessageVisible, setIsDeleteScoresMessageVisible] = useState();
 
     useEffect(() => {
         if(!isUserInfoSet) {
@@ -51,6 +53,24 @@ export default function Account() {
         setIsForceUpdateMessageVisible(true);
     }
 
+    async function DeleteScores() {
+        setIsDeleteScoresMessageVisible(false);
+        const accessToken = await getAccessTokenSilently();
+
+        const config = {
+            url: `${process.env.REACT_APP_API_URL}/player/removescores/` + user.email,
+            method: "GET",
+            headers: {
+                "content-type": "application/json",
+                Authorization: `Bearer ${accessToken}`,
+            },
+        };
+
+        let res = await axios(config);
+        setDeleteScoresMessage(res.data);
+        setIsDeleteScoresMessageVisible(true);
+    }
+
     return(
         <>
             <CustomNavbar/>
@@ -82,6 +102,15 @@ export default function Account() {
                             {isForceUpdateMessageVisible && forceUpdateMessage &&
                                 <p style={{display: "inline"}}>
                                     {forceUpdateMessage}
+                                </p>
+                            }
+                            <br/>
+                            <button onClick={DeleteScores}>
+                                Delete Scores
+                            </button>
+                            {isDeleteScoresMessageVisible && deleteScoresMessage &&
+                                <p style={{display: "inline"}}>
+                                    {deleteScoresMessage}
                                 </p>
                             }
                         </div>
