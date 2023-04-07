@@ -46,12 +46,12 @@ export default function TableLeaderboardMap({ data, rowsPerPage, players}) {
                                 {data.findIndex(x => x.player_id === el.player_id) + 1}
                             </td>
                             <td className={styles.tableCell}>
-                                <img src={process.env.PUBLIC_URL + '/' + el.grade} alt={"grade"} style={{height: '52px', width: '50px'}}/>
+                                <img src={import.meta.env.BASE_URL + el.grade} alt={"grade"} style={{height: '52px', width: '50px'}}/>
                             </td>
                             <td className={styles.tableCell}>
                                 <img src={players && players.find(x => x.id === el.player_id) && players.find(x => x.id === el.player_id).image} style={{width: '70px', height: '70px'}} alt={"player"} />
                                 {' '}
-                                <a href={process.env.PUBLIC_URL + "/profile/" + el.player_id} style={{textDecoration: 'none'}}>
+                                <a href={import.meta.env.BASE_URL + "profile/" + el.player_id} style={{textDecoration: 'none'}}>
                                     {players && players.find(x => x.id === el.player_id) && players.find(x => x.id === el.player_id).name}
                                 </a>
                             </td>

@@ -1,7 +1,7 @@
 import React from "react";
 
 export const PageLoader = () => {
-    const loadingImg = `${process.env.PUBLIC_URL}/loader.svg`;
+    const loadingImg = `${import.meta.env.BASE_URL}loader.svg`;
 
     return (
         <div className="loader">

@@ -18,9 +18,9 @@ export default function Map() {
     const [players, setPlayers] = useState([]);
     const [isPlayersSet, setIsPlayersSet] = useState(false);
 
-    let url = `${process.env.REACT_APP_API_URL}/maps/byid/` + id;
-    let url2 = `${process.env.REACT_APP_API_URL}/maps/scores/` + id;
-    let url3 = `${process.env.REACT_APP_API_URL}/leaderboard/global`;
+    let url = `${import.meta.env.VITE_API_URL}/maps/byid/` + id;
+    let url2 = `${import.meta.env.VITE_API_URL}/maps/scores/` + id;
+    let url3 = `${import.meta.env.VITE_API_URL}/leaderboard/global`;
 
     useEffect(() => {
         if(!isMapSet) {
@@ -63,7 +63,7 @@ export default function Map() {
                         </h1>
                         <span>
                             by {" "}
-                            <a href={process.env.PUBLIC_URL + '/profile/' + map.author}>
+                            <a href={import.meta.env.BASE_URL + 'profile/' + map.author}>
                                 {players && players.find(x => x.id === map.author) ? players.find(x => x.id === map.author).name : map.author}
                             </a>
                         </span>

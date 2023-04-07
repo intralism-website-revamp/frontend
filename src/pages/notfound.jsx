@@ -1,7 +1,7 @@
 import CustomNavbar from "../components/navbar";
 import React from "react";
 
-export default function NotFound() {
+export default function Notfound() {
     return(
         <div>
             <CustomNavbar />

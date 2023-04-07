@@ -16,7 +16,7 @@ export default function Mod({data}) {
                         <br/>
                         <span>
                             by {' '}
-                            <a href={`${process.env.PUBLIC_URL}/profile/${data.author}`} style={{textDecoration: "none"}}>
+                            <a href={`${import.meta.env.BASE_URL}profile/${data.author}`} style={{textDecoration: "none"}}>
                                 {data.authorName}
                             </a>
                         </span>

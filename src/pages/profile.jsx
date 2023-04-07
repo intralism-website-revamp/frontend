@@ -25,9 +25,9 @@ export default function Profile() {
     const [userInfo, setUserInfo] = useState();
     const [isUserInfoSet, setIsUserInfoSet] = useState(false);
 
-    let url = `${process.env.REACT_APP_API_URL}/player/update/${id}`;
-    let url2 = `${process.env.REACT_APP_API_URL}/tags/${id}`;
-    let url3 = `${process.env.REACT_APP_API_URL}/player/noupdate/${id}`;
+    let url = `${import.meta.env.VITE_API_URL}/player/update/${id}`;
+    let url2 = `${import.meta.env.VITE_API_URL}/tags/${id}`;
+    let url3 = `${import.meta.env.VITE_API_URL}/player/noupdate/${id}`;
 
     useEffect(() => {
         if(!isUserInfoSet) {
@@ -77,7 +77,7 @@ export default function Profile() {
         const accessToken = await getAccessTokenSilently();
 
         const config = {
-            url: `${process.env.REACT_APP_API_URL}/user/info/` + user.email,
+            url: `${import.meta.env.VITE_API_URL}/user/info/` + user.email,
             method: "GET",
             headers: {
                 "content-type": "application/json",
@@ -125,8 +125,8 @@ export default function Profile() {
                             </span>
                             <span style={{whiteSpace: 'nowrap', paddingLeft: '30px'}}>
                                 <Tooltip title={player.country}>
-                                    <a href={process.env.PUBLIC_URL + '/leaderboard/' + player.countryShort}>
-                                        <img style={{height: '34px', width: '20px', paddingBottom: "10px"}} src={process.env.PUBLIC_URL + '/flags/' + player.countryShort + '.svg'} alt={"country flag"}/>
+                                    <a href={import.meta.env.BASE_URL + 'leaderboard/' + player.countryShort}>
+                                        <img style={{height: '34px', width: '20px', paddingBottom: "10px"}} src={import.meta.env.BASE_URL + 'flags/' + player.countryShort + '.svg'} alt={"country flag"}/>
                                     </a>
                                 </Tooltip> #{player.countryRank}
                             </span>
@@ -139,27 +139,27 @@ export default function Profile() {
                             </Tooltip>
                         </div>
                         <a href={"https://intralism.khb-soft.ru/?player=" + id} target='_blank' rel='noreferrer'>
-                            <img src={process.env.PUBLIC_URL + "/official_intralism.png"} alt={"steam"} style={{height: '25px', width: '25px'}}/>
+                            <img src={import.meta.env.BASE_URL + "official_intralism.png"} alt={"steam"} style={{height: '25px', width: '25px'}}/>
                         </a>
                         <a style={{paddingLeft: '15px'}} href={"https://steamcommunity.com/profiles/" + id} target='_blank' rel='noreferrer'>
-                            <img src={process.env.PUBLIC_URL + "/steam.png"} alt={"steam"} style={{height: '25px', width: '25px'}}/>
+                            <img src={import.meta.env.BASE_URL + "steam.png"} alt={"steam"} style={{height: '25px', width: '25px'}}/>
                         </a>
                     </Col>
                     <Col xs={2}>
                         <br/>
                         <br/>
-                        <img src={process.env.PUBLIC_URL + "/Grade_SS.svg"} alt="grade ss" style={{width: "35px", height: "35px", marginRight: "5px"}}/>
+                        <img src={import.meta.env.BASE_URL + "Grade_SS.svg"} alt="grade ss" style={{width: "35px", height: "35px", marginRight: "5px"}}/>
                         {player && player.scores && player.scores.filter(x => x.grade.endsWith("SS.svg")).length}
-                        <img src={process.env.PUBLIC_URL + "/Grade_S.svg"} alt="grade s" style={{width: "35px", height: "35px", marginLeft: "10px", marginRight: "5px"}}/>
+                        <img src={import.meta.env.BASE_URL + "Grade_S.svg"} alt="grade s" style={{width: "35px", height: "35px", marginLeft: "10px", marginRight: "5px"}}/>
                         {player && player.scores && player.scores.filter(x => x.grade.endsWith("_S.svg")).length}
-                        <img src={process.env.PUBLIC_URL + "/Grade_A.svg"} alt="grade a" style={{width: "35px", height: "35px", marginLeft: "10px", marginRight: "5px"}}/>
+                        <img src={import.meta.env.BASE_URL + "Grade_A.svg"} alt="grade a" style={{width: "35px", height: "35px", marginLeft: "10px", marginRight: "5px"}}/>
                         {player && player.scores && player.scores.filter(x => x.grade.endsWith("A.svg")).length}
                         <br/>
-                        <img src={process.env.PUBLIC_URL + "/Grade_B.svg"} alt="grade b" style={{width: "35px", height: "35px", marginLeft: "10px", marginRight: "5px"}}/>
+                        <img src={import.meta.env.BASE_URL + "Grade_B.svg"} alt="grade b" style={{width: "35px", height: "35px", marginLeft: "10px", marginRight: "5px"}}/>
                         {player && player.scores && player.scores.filter(x => x.grade.endsWith("B.svg")).length}
-                        <img src={process.env.PUBLIC_URL + "/Grade_C.svg"} alt="grade c" style={{width: "35px", height: "35px", marginLeft: "10px", marginRight: "5px"}}/>
+                        <img src={import.meta.env.BASE_URL + "Grade_C.svg"} alt="grade c" style={{width: "35px", height: "35px", marginLeft: "10px", marginRight: "5px"}}/>
                         {player && player.scores && player.scores.filter(x => x.grade.endsWith("C.svg")).length}
-                        <img src={process.env.PUBLIC_URL + "/Grade_F.svg"} alt="grade f" style={{width: "35px", height: "35px", marginLeft: "10px", marginRight: "5px"}}/>
+                        <img src={import.meta.env.BASE_URL + "Grade_F.svg"} alt="grade f" style={{width: "35px", height: "35px", marginLeft: "10px", marginRight: "5px"}}/>
                         {player && player.scores && player.scores.filter(x => x.grade.endsWith("F.svg")).length}
                         <br/>
                         <br/>
@@ -186,8 +186,8 @@ export default function Profile() {
                     <h3 style={{textAlign: "center"}}>
                         Missing Scores
                     </h3>
-                    <img id={"missingScoresDownArrow"} src={process.env.PUBLIC_URL + "/arrow-down-solid.svg"} style={{height: "30px", width: "30px", position: "absolute", left: "49%"}} onClick={SwitchMissingScores} alt={"down arrow"}/>
-                    <img id={"missingScoresUpArrow"} src={process.env.PUBLIC_URL + "/arrow-up-solid.svg"} style={{height: "30px", width: "30px", position: "absolute", left: "49%"}} onClick={SwitchMissingScores} className={styles.hidden} alt={"up arrow"}/>
+                    <img id={"missingScoresDownArrow"} src={import.meta.env.BASE_URL + "arrow-down-solid.svg"} style={{height: "30px", width: "30px", position: "absolute", left: "49%"}} onClick={SwitchMissingScores} alt={"down arrow"}/>
+                    <img id={"missingScoresUpArrow"} src={import.meta.env.BASE_URL + "arrow-up-solid.svg"} style={{height: "30px", width: "30px", position: "absolute", left: "49%"}} onClick={SwitchMissingScores} className={styles.hidden} alt={"up arrow"}/>
                     <br/>
                     <br/>
                     <div className={styles.hidden} id={"missingScores"}>

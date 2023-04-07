@@ -7,7 +7,7 @@ export default function Leaderboard() {
     const [players, setPlayers] = useState([]);
     const [arePlayersSet, setArePlayersSet] = useState(false);
 
-    let url = `${process.env.REACT_APP_API_URL}/leaderboard/global`;
+    let url = `${import.meta.env.VITE_API_URL}/leaderboard/global`;
 
     useEffect(() => {
         if(!arePlayersSet) {

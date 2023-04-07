@@ -33,7 +33,7 @@ export default function TableMaps({ data, rowsPerPage }) {
     const [formDeleteValue, setFormDeleteValue] = useState(formDeleteDefaultValues);
     const [formEditValue, setFormEditValue] = useState(formEditDefaultValues);
 
-    let url = `${process.env.REACT_APP_API_URL}/leaderboard/global`;
+    let url = `${import.meta.env.VITE_API_URL}/leaderboard/global`;
 
     useEffect(() => {
         if(!isPlayersSet) {
@@ -53,7 +53,7 @@ export default function TableMaps({ data, rowsPerPage }) {
         const accessToken = await getAccessTokenSilently();
 
         const config = {
-            url: `${process.env.REACT_APP_API_URL}/permission/map`,
+            url: `${import.meta.env.VITE_API_URL}/permission/map`,
             method: "GET",
             headers: {
                 "content-type": "application/json",
@@ -78,7 +78,7 @@ export default function TableMaps({ data, rowsPerPage }) {
         try {
             await axios({
                 method: "post",
-                url: `${process.env.REACT_APP_API_URL}/maps/remove`,
+                url: `${import.meta.env.VITE_API_URL}/maps/remove`,
                 data: formData,
                 headers: {
                     "Content-Type": "multipart/form-data",
@@ -106,7 +106,7 @@ export default function TableMaps({ data, rowsPerPage }) {
         try {
             await axios({
                 method: "post",
-                url: `${process.env.REACT_APP_API_URL}/maps/edit`,
+                url: `${import.meta.env.VITE_API_URL}/maps/edit`,
                 data: formData,
                 headers: {
                     "Content-Type": "multipart/form-data",
@@ -173,7 +173,7 @@ export default function TableMaps({ data, rowsPerPage }) {
                                 <img src={el.image} style={{width: '70px', height: '70px'}} alt={"cover"} />
                             </td>
                             <td className={styles.tableCell}>
-                                <a href={process.env.PUBLIC_URL + "/map/" + el.id}>
+                                <a href={import.meta.env.BASE_URL + "map/" + el.id}>
                                     {el.name}
                                 </a>
                             </td>
@@ -188,7 +188,7 @@ export default function TableMaps({ data, rowsPerPage }) {
                                 {el.status}
                             </td>
                             <td className={styles.tableCell}>
-                                <a href={process.env.PUBLIC_URL + "/profile/" + el.author} style={{textDecoration: 'none'}}>
+                                <a href={import.meta.env.BASE_URL + "profile/" + el.author} style={{textDecoration: 'none'}}>
                                     {players && players.find(x => x.id === el.author) === undefined ? el.author : players.find(x => x.id === el.author).name}
                                 </a>
                             </td>

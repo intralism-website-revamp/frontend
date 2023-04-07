@@ -26,13 +26,13 @@ export default function Maps() {
 
     const [formValue, setformValue] = useState(formDefaultValues);
 
-    let url = `${process.env.REACT_APP_API_URL}/maps/all`;
+    let url = `${import.meta.env.VITE_API_URL}/maps/all`;
 
     const getPermitted = async () => {
         const accessToken = await getAccessTokenSilently();
 
         const config = {
-            url: `${process.env.REACT_APP_API_URL}/permission/map`,
+            url: `${import.meta.env.VITE_API_URL}/permission/map`,
             method: "GET",
             headers: {
                 "content-type": "application/json",
@@ -72,7 +72,7 @@ export default function Maps() {
         try {
             await axios({
                 method: "post",
-                url: `${process.env.REACT_APP_API_URL}/maps/add`,
+                url: `${import.meta.env.VITE_API_URL}/maps/add`,
                 data: formData,
                 headers: {
                     "Content-Type": "multipart/form-data",

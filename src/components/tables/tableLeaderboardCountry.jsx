@@ -39,7 +39,7 @@ export default function TableLeaderboardCountry({ data, rowsPerPage }) {
                             <td className={styles.tableCell}>
                                 <img src={el.image} style={{width: '70px', height: '70px'}} alt={"picture of " + el.name}/>
                                 {" "}
-                                <a href={process.env.PUBLIC_URL + "/profile/" + el.id} style={{textDecoration: 'none'}}>
+                                <a href={import.meta.env.BASE_URL + "profile/" + el.id} style={{textDecoration: 'none'}}>
                                     {el.name}
                                 </a>
                             </td>

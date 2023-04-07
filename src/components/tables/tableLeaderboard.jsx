@@ -44,14 +44,14 @@ export default function TableLeaderboard({ data, rowsPerPage }) {
                             <td className={styles.tableCell}>
                                 <img src={el.image} style={{width: '70px', height: '70px'}} alt={"picture of " + el.name}/>
                                 {" "}
-                                <a href={process.env.PUBLIC_URL + "/profile/" + el.id} style={{textDecoration: 'none'}}>
+                                <a href={import.meta.env.BASE_URL + "profile/" + el.id} style={{textDecoration: 'none'}}>
                                     {el.name}
                                 </a>
                             </td>
                             <td className={styles.tableCell}>
                                 <Tooltip title={el.country.toUpperCase() === "NONE" ? "Unknown Country" : regionNames.of(el.country.toUpperCase())}>
-                                    <a href={process.env.PUBLIC_URL + '/leaderboard/' + el.country}>
-                                        <img style={{height: '42px', width: '26px'}} src={process.env.PUBLIC_URL + '/flags/' + el.country + '.svg'} alt={"image of " + el.country}/>
+                                    <a href={import.meta.env.BASE_URL + 'leaderboard/' + el.country}>
+                                        <img style={{height: '42px', width: '26px'}} src={import.meta.env.BASE_URL + 'flags/' + el.country + '.svg'} alt={"image of " + el.country}/>
                                     </a>
                                 </Tooltip> #{el.country_rank}
                             </td>

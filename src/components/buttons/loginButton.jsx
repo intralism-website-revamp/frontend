@@ -14,7 +14,7 @@ export default function LoginButton() {
 
     return (
         <button className="bg-light" onClick={handleLogin} style={{border: "none"}}>
-            <img src={process.env.PUBLIC_URL + "/right-to-bracket-solid.svg"} style={{width: "15px", height: "15px"}} alt={"login button"}/>
+            <img src={import.meta.env.BASE_URL + "right-to-bracket-solid.svg"} style={{width: "15px", height: "15px"}} alt={"login button"}/>
         </button>
     );
 }

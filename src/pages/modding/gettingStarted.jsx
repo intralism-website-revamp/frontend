@@ -16,7 +16,7 @@ export default function GettingStarted() {
                     </a>
                     .
                 </p>
-                <img src={`${process.env.PUBLIC_URL}/modding/bepinex-download.png`} alt={"bepinex download"}/>
+                <img src={`${import.meta.env.BASE_URL}modding/bepinex-download.png`} alt={"bepinex download"}/>
                 <br/>
                 <p>
                     Make sure you download the x64 version if you are on Windows.
@@ -27,17 +27,17 @@ export default function GettingStarted() {
                     <br/>
                     Default directory is C:\Program Files (x86)\Steam\steamapps\common\Intralism
                 </p>
-                <img src={`${process.env.PUBLIC_URL}/modding/intralism-directory-before-bepinex.png`} alt={"intralism directory"}/>
+                <img src={`${import.meta.env.BASE_URL}modding/intralism-directory-before-bepinex.png`} alt={"intralism directory"}/>
                 <p>
                     You can also open the properties of Intralism in Steam and click the Browse button under Local Files.
                 </p>
-                <img src={`${process.env.PUBLIC_URL}/modding/intralism-properties.png`} alt={"intralism properties"}/>
+                <img src={`${import.meta.env.BASE_URL}modding/intralism-properties.png`} alt={"intralism properties"}/>
                 <p>
                     Now extract the content of the BepInEx zip file into the game directory.
                     <br/>
                     With the BepInEx files extracted it should look similar to this
                 </p>
-                <img src={`${process.env.PUBLIC_URL}/modding/intralism-directory-after-bepinex.png`} alt={"intralism directory"}/>
+                <img src={`${import.meta.env.BASE_URL}modding/intralism-directory-after-bepinex.png`} alt={"intralism directory"}/>
                 <p>
                     Start your game and make sure that it still boots correctly. Note: {' '}
                     <b>
@@ -47,7 +47,7 @@ export default function GettingStarted() {
                     If it booted correctly, close the game and go into the BepInEx folder and check if a config
                     folder got created with at least a BepInEx.cfg inside it.
                 </p>
-                <img src={`${process.env.PUBLIC_URL}/modding/bepinex-config-folder.png`} alt={"bepinex config folder"}/>
+                <img src={`${import.meta.env.BASE_URL}modding/bepinex-config-folder.png`} alt={"bepinex config folder"}/>
                 <p>
                     If that's the case then you can install mods now.
                 </p>
@@ -57,7 +57,7 @@ export default function GettingStarted() {
                 </h3>
                 <p>
                     Head over to the {' '}
-                    <a href={`${process.env.PUBLIC_URL}/modding/mods`} style={{textDecoration: "none"}}>
+                    <a href={`${import.meta.env.BASE_URL}modding/mods`} style={{textDecoration: "none"}}>
                         mods
                     </a>
                     {' '}page and download the mods you want to install.
@@ -66,7 +66,7 @@ export default function GettingStarted() {
                     <br/>
                     Now you can put the mods you just downloaded inside that folder.
                 </p>
-                <img src={`${process.env.PUBLIC_URL}/modding/plugins-folder.png`} alt={"plugins folder"}/>
+                <img src={`${import.meta.env.BASE_URL}modding/plugins-folder.png`} alt={"plugins folder"}/>
                 <p>
                     If the mods were packed in a zip file make sure to unzip the archive. {' '}
                     <b>

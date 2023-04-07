@@ -22,7 +22,7 @@ export default function Account() {
         const accessToken = await getAccessTokenSilently();
 
         const config = {
-            url: `${process.env.REACT_APP_API_URL}/user/info/` + user.email,
+            url: `${import.meta.env.VITE_API_URL}/user/info/` + user.email,
             method: "GET",
             headers: {
                 "content-type": "application/json",
@@ -40,7 +40,7 @@ export default function Account() {
         const accessToken = await getAccessTokenSilently();
 
         const config = {
-            url: `${process.env.REACT_APP_API_URL}/player/forceupdate/` + user.email,
+            url: `${import.meta.env.VITE_API_URL}/player/forceupdate/` + user.email,
             method: "GET",
             headers: {
                 "content-type": "application/json",
@@ -58,7 +58,7 @@ export default function Account() {
         const accessToken = await getAccessTokenSilently();
 
         const config = {
-            url: `${process.env.REACT_APP_API_URL}/player/removescores/` + user.email,
+            url: `${import.meta.env.VITE_API_URL}/player/removescores/` + user.email,
             method: "GET",
             headers: {
                 "content-type": "application/json",

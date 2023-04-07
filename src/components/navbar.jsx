@@ -28,7 +28,7 @@ export default function CustomNavbar() {
         const accessToken = await getAccessTokenSilently();
 
         const config = {
-            url: `${process.env.REACT_APP_API_URL}/user/info/` + user.email,
+            url: `${import.meta.env.VITE_API_URL}/user/info/` + user.email,
             method: "GET",
             headers: {
                 "content-type": "application/json",
@@ -45,7 +45,7 @@ export default function CustomNavbar() {
         const accessToken = await getAccessTokenSilently();
 
         const config = {
-            url: `${process.env.REACT_APP_API_URL}/permission/admin`,
+            url: `${import.meta.env.VITE_API_URL}/permission/admin`,
             method: "GET",
             headers: {
                 "content-type": "application/json",
@@ -61,22 +61,22 @@ export default function CustomNavbar() {
         <div>
             <Container fluid className="p-3">
                 <Navbar bg="light" expand="lg">
-                    <Navbar.Brand href={`${process.env.PUBLIC_URL}/home`}>
-                        <img src={process.env.PUBLIC_URL + "/favicon.ico"} alt={"logo"} style={{height: '30px', width: '30px'}}/>
+                    <Navbar.Brand href={`${import.meta.env.BASE_URL}home`}>
+                        <img src={import.meta.env.BASE_URL + "favicon.ico"} alt={"logo"} style={{height: '30px', width: '30px'}}/>
                         {' '}Intralism Revamp
                     </Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav"/>
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="me-auto">
-                            <Nav.Link href={`${process.env.PUBLIC_URL}/leaderboard/global`}>
+                            <Nav.Link href={`${import.meta.env.BASE_URL}leaderboard/global`}>
                                 Leaderboard
                             </Nav.Link>
-                            <Nav.Link href={`${process.env.PUBLIC_URL}/maps`}>
+                            <Nav.Link href={`${import.meta.env.BASE_URL}maps`}>
                                 Maps
                             </Nav.Link>
                             <NavDropdown title={"Modding"} id="basic-nav-dropdown" renderMenuOnMount={true}>
-                                <NavDropdown.Item href={`${process.env.PUBLIC_URL}/modding/gettingstarted`}>Getting Started</NavDropdown.Item>
-                                <NavDropdown.Item href={`${process.env.PUBLIC_URL}/modding/mods`}>Mods</NavDropdown.Item>
+                                <NavDropdown.Item href={`${import.meta.env.BASE_URL}modding/gettingstarted`}>Getting Started</NavDropdown.Item>
+                                <NavDropdown.Item href={`${import.meta.env.BASE_URL}modding/mods`}>Mods</NavDropdown.Item>
                             </NavDropdown>
                         </Nav>
                         <Nav className="justify-content-end">
@@ -88,15 +88,15 @@ export default function CustomNavbar() {
                             {isAuthenticated &&
                                 <>
                                     {adminPermitted &&
-                                        <Nav.Link href={`${process.env.PUBLIC_URL}/admin`}>
+                                        <Nav.Link href={`${import.meta.env.BASE_URL}admin`}>
                                             Admin
                                         </Nav.Link>
                                     }
                                     <NavDropdown title={user.name} id="basic-nav-dropdown" renderMenuOnMount={true}>
                                         {userInfo && userInfo.steam_id &&
-                                            <NavDropdown.Item href={`${process.env.PUBLIC_URL}/profile/${userInfo.steam_id}`} >Profile</NavDropdown.Item>
+                                            <NavDropdown.Item href={`${import.meta.env.BASE_URL}profile/${userInfo.steam_id}`} >Profile</NavDropdown.Item>
                                         }
-                                        <NavDropdown.Item href={`${process.env.PUBLIC_URL}/account`}>Settings</NavDropdown.Item>
+                                        <NavDropdown.Item href={`${import.meta.env.BASE_URL}account`}>Settings</NavDropdown.Item>
                                         <NavDropdown.Item><LogoutButton /></NavDropdown.Item>
                                     </NavDropdown>
                                 </>

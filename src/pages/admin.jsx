@@ -19,7 +19,7 @@ export default function Admin() {
         const accessToken = await getAccessTokenSilently();
 
         const config = {
-            url: `${process.env.REACT_APP_API_URL}/permission/admin`,
+            url: `${import.meta.env.VITE_API_URL}/permission/admin`,
             method: "GET",
             headers: {
                 "content-type": "application/json",
@@ -36,7 +36,7 @@ export default function Admin() {
         const accessToken = await getAccessTokenSilently();
 
         const config = {
-            url: `${process.env.REACT_APP_API_URL}/leaderboard/recalc`,
+            url: `${import.meta.env.VITE_API_URL}/leaderboard/recalc`,
             method: "GET",
             headers: {
                 "content-type": "application/json",

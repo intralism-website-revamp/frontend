@@ -30,7 +30,7 @@ export default function PlayerMissingScores({ data, rowsPerPage }) {
                                 <img src={el.image} style={{height: '52px', width: '50px', paddingTop: '2px'}} alt={"map"}/>
                             </td>
                             <td className={styles.tableCell}>
-                                <a href={process.env.PUBLIC_URL + "/map/" + el.id} style={{textDecoration: 'none'}}>
+                                <a href={import.meta.env.BASE_URL + "map/" + el.id} style={{textDecoration: 'none'}}>
                                     <span style={{fontSize: '20px', marginBottom: '0px'}}>
                                         {el.name}
                                     </span>

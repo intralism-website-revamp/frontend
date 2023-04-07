@@ -10,7 +10,7 @@ export default function LeaderboardCountry() {
     const [players, setPlayers] = useState([]);
     const [arePlayersSet, setArePlayersSet] = useState(false);
 
-    let url = `${process.env.REACT_APP_API_URL}/leaderboard/country/` + country;
+    let url = `${import.meta.env.VITE_API_URL}/leaderboard/country/` + country;
 
     useEffect(() => {
         if(!arePlayersSet) {
@@ -39,7 +39,7 @@ export default function LeaderboardCountry() {
             <CustomNavbar/>
             <h1>
                 Country Ranking: {" "}
-                <img style={{height: '42px', width: '26px'}} src={process.env.PUBLIC_URL + '/flags/' + country.toLowerCase() + '.svg'} alt={"flag of " + countryName}/>
+                <img style={{height: '42px', width: '26px'}} src={import.meta.env.BASE_URL + 'flags/' + country.toLowerCase() + '.svg'} alt={"flag of " + countryName}/>
                 {" "}{countryName}
             </h1>
             <br/>

@@ -14,7 +14,7 @@ export default function Home() {
                 </span>
                 <br/>
                 <span>
-                    To view your profile visit {window.location.origin + process.env.PUBLIC_URL}/profile/[your id]
+                    To view your profile visit {window.location.origin + import.meta.env.BASE_URL}profile/[your id]
                 </span>
                 <br/>
                 <span>
